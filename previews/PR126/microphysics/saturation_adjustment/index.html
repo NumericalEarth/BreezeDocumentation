@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Warm phase saturation adjustment · Breeze</title><meta name="title" content="Warm phase saturation adjustment · Breeze"/><meta property="og:title" content="Warm phase saturation adjustment · Breeze"/><meta property="twitter:title" content="Warm phase saturation adjustment · Breeze"/><meta name="description" content="Documentation for Breeze."/><meta property="og:description" content="Documentation for Breeze."/><meta property="twitter:description" content="Documentation for Breeze."/><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../search_index.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">Breeze</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><span class="tocitem">Examples</span><ul><li><a class="tocitem" href="../../literated/thermal_bubble/">Thermal bubble</a></li></ul></li><li><a class="tocitem" href="../../thermodynamics/">Thermodynamics</a></li><li><span class="tocitem">Microphysics</span><ul><li><a class="tocitem" href="../microphysics_overview/">Overview</a></li><li class="is-active"><a class="tocitem" href>Warm phase saturation adjustment</a><ul class="internal"><li><a class="tocitem" href="#Moist-static-energy-and-total-moisture-mass-fraction"><span>Moist static energy and total moisture mass fraction</span></a></li><li><a class="tocitem" href="#Equilibrium-expressions-for-moist-static-energy-and-saturation-specific-humidity"><span>Equilibrium expressions for moist static energy and saturation specific humidity</span></a></li><li><a class="tocitem" href="#The-saturation-adjustment-algorithm"><span>The saturation adjustment algorithm</span></a></li></ul></li></ul></li><li><a class="tocitem" href="../../dycore_equations_algorithms/">Dycore equations and algorithms</a></li><li><span class="tocitem">Appendix</span><ul><li><a class="tocitem" href="../../appendix/notation/">Notation</a></li></ul></li><li><a class="tocitem" href="../../references/">References</a></li><li><a class="tocitem" href="../../api/">API</a></li><li><a class="tocitem" href="../../contributing/">Contributors guide</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Microphysics</a></li><li class="is-active"><a href>Warm phase saturation adjustment</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Warm phase saturation adjustment</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/NumericalEarth/Breeze.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/NumericalEarth/Breeze.jl/blob/main/docs/src/microphysics/saturation_adjustment.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="saturation_adjustment-section"><a class="docs-heading-anchor" href="#saturation_adjustment-section">Warm-phase saturation adjustment</a><a id="saturation_adjustment-section-1"></a><a class="docs-heading-anchor-permalink" href="#saturation_adjustment-section" title="Permalink"></a></h1><p>Warm-phase saturation adjustment is a model for water droplet nucleation that assumes that water vapor in excess of the saturation specific humidity is instantaneously converted to liquid water. Mixed-phase saturation adjustment is described by <a href="../../references/#Pressel2015">Pressel <em>et al.</em> (2015)</a>.</p><h2 id="Moist-static-energy-and-total-moisture-mass-fraction"><a class="docs-heading-anchor" href="#Moist-static-energy-and-total-moisture-mass-fraction">Moist static energy and total moisture mass fraction</a><a id="Moist-static-energy-and-total-moisture-mass-fraction-1"></a><a class="docs-heading-anchor-permalink" href="#Moist-static-energy-and-total-moisture-mass-fraction" title="Permalink"></a></h2><p>The saturation adjustment solver (specific to our anelastic formulation) takes four inputs:     * moist static energy <span>$e$</span>     * total moisture mass fraction <span>$qᵗ$</span>     * height <span>$z$</span>     * reference pressure <span>$pᵣ$</span></p><p>Note that moist static energy density <span>$ρᵣ e$</span> and moisture density <span>$ρᵣ qᵗ$</span> are prognostic variables for <code>Breeze.AtmosphereModel</code> when using <code>AnelasticFormulation</code>, where <span>$ρᵣ$</span> is the reference density. With warm-phase microphysics, the moist static energy <span>$e$</span> is related to temperature <span>$T$</span>, height <span>$z$</span>, and liquid mass fraction <span>$qˡ$</span> by</p><p class="math-container">\[e \equiv cᵖᵐ \, T + g z - ℒˡᵣ qˡ ,\]</p><p>where <span>$cᵖᵐ$</span> is the mixture heat capacity, <span>$g$</span> is gravitational acceleration, and <span>$ℒˡᵣ$</span> is the latent heat at the energy reference temperature.</p><h2 id="Equilibrium-expressions-for-moist-static-energy-and-saturation-specific-humidity"><a class="docs-heading-anchor" href="#Equilibrium-expressions-for-moist-static-energy-and-saturation-specific-humidity">Equilibrium expressions for moist static energy and saturation specific humidity</a><a id="Equilibrium-expressions-for-moist-static-energy-and-saturation-specific-humidity-1"></a><a class="docs-heading-anchor-permalink" href="#Equilibrium-expressions-for-moist-static-energy-and-saturation-specific-humidity" title="Permalink"></a></h2><p>Saturation adjustment microphysics assumes that temperature and the moisture mass fractions instantaneously adjust to an equilibrium in which the specific humidity is equal to or less than the saturation specific humidity. This equilibrium condition implies that the liquid mass fraction <span>$qˡ$</span> is given by</p><p class="math-container">\[qˡ = \max(0, qᵗ - qᵛ⁺)\]</p><p>where <span>$qᵗ$</span> is the total moisture mass fraction, and <span>$qᵛ⁺$</span> is the saturation specific humidity at the temperature <span>$T$</span>. The saturation specific humidity is defined as</p><p class="math-container">\[qᵛ⁺ = \frac{ρᵛ⁺}{ρ},\]</p><p>where <span>$ρᵛ⁺ = pᵛ⁺ / Rᵛ T$</span> is the density associated with the saturation vapor pressure <span>$pᵛ⁺$</span> and <span>$Rᵛ$</span> is the vapor gas constant. Note that the air density <span>$ρ$</span> itself depends on the specific humidity, since according to the ideal gas law,</p><p class="math-container">\[ρ = \frac{pᵣ}{Rᵐ T} = \frac{pᵣ}{\left (qᵈ Rᵈ + qᵛ Rᵛ \right ) T} ,\]</p><p>where <span>$qᵈ = 1 - qᵗ$</span> is the dry air mass fraction, <span>$qᵛ$</span> is the specific humidity, <span>$Rᵈ$</span> is the dry air gas constant, and <span>$Rᵛ$</span> is the vapor gas constant. The density <span>$ρ$</span> is expressed in terms of <span>$pᵣ$</span> under the anelastic approximation.</p><p>In saturated conditions, we have <span>$qᵛ ≡ qᵛ⁺$</span> by definition, which leads to the expression </p><p class="math-container">\[qᵛ⁺ = \frac{ρᵛ⁺}{ρ} = \frac{Rᵐ}{Rᵛ} \frac{pᵛ⁺}{pᵣ} = \frac{Rᵈ}{Rᵛ} \left ( 1 - qᵗ \right ) \frac{pᵛ⁺}{pᵣ} + qᵛ⁺ \frac{pᵛ⁺}{pᵣ} .\]</p><p>Rearranging, we find a new expression for the saturation specific humidity which is <em>valid only in saturated conditions and under the assumptions of saturation adjustment</em>,</p><p class="math-container">\[qᵛ⁺ = \frac{Rᵈ}{Rᵛ} \left ( 1 - qᵗ \right ) \frac{pᵛ⁺}{pᵣ - pᵛ⁺} .\]</p><p>This expression can also be found in <a href="../../references/#Pressel2015">Pressel <em>et al.</em> (2015)</a>, equation 37.</p><h2 id="The-saturation-adjustment-algorithm"><a class="docs-heading-anchor" href="#The-saturation-adjustment-algorithm">The saturation adjustment algorithm</a><a id="The-saturation-adjustment-algorithm-1"></a><a class="docs-heading-anchor-permalink" href="#The-saturation-adjustment-algorithm" title="Permalink"></a></h2><p>We compute the saturation adjustment temperature by solving the nonlinear algebraic equation</p><p class="math-container">\[0 = r(T) \equiv T - \frac{1}{cᵖᵐ} \left [ e - g z + ℒˡᵣ \max(0, qᵗ - qᵛ⁺) \right ] \,\]</p><p>where <span>$r$</span> is the &quot;residual&quot;, using a secant method.</p><p>As an example, we consider an air parcel at sea level within a reference state with base pressure of 101325 Pa and a surface temperature <span>$T₀ = 288$</span>ᵒK. We first compute the saturation specific humidity assuming a dry-air density,</p><pre><code class="language-julia hljs">using Breeze
+using Breeze.Thermodynamics: saturation_specific_humidity
+
+thermo = ThermodynamicConstants()
+
+p = 101325.0
+T = 288.0
+Rᵈ = Breeze.Thermodynamics.dry_air_gas_constant(thermo)
+ρ = p / (Rᵈ * T)
+qᵛ⁺₀ = saturation_specific_humidity(T, ρ, thermo, thermo.liquid)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">0.010359995391195264</code></pre><p>Next, we compute the saturation specific humidity for moist air with a carefully chosen moist air mass fraction,</p><pre><code class="language-julia hljs">using Breeze.Microphysics: adjustment_saturation_specific_humidity
+
+qᵗ = 0.012   # [kg kg⁻¹] total specific humidity
+qᵛ⁺ = Breeze.Microphysics.adjustment_saturation_specific_humidity(T, p, qᵗ, thermo)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">0.01040909041114332</code></pre><p>There are two facts of note. First is that we have identified a situation in which <span>$qᵗ &gt; qᵛ⁺$</span>, since <span>$qᵗ = 0.012$</span> and <span>$qᵛ⁺ = 0.0104$</span>. Second, note that the saturation specific humidity is <em>higher</em> if we assume a saturated state, versus the unsaturated result given by <span>$qᵛ⁺₀$</span> above. This is because moist air is less dense than dry air, so the denominator <span>$ρ$</span> is smaller under the assumption of a saturated state.</p><p>In equilibrium (and thus under the assumptions of saturation adjustment), the specific humidity is <span>$qᵛ = qᵛ⁺$</span>, while the liquid mass fraction is</p><pre><code class="language-julia hljs">qˡ = qᵗ - qᵛ⁺</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">0.0015909095888566802</code></pre><p>It is small but greater than zero → the typical situation in clouds on Earth. We are now ready to compute moist static energy,</p><pre><code class="language-julia hljs">using Breeze.Thermodynamics: MoistureMassFractions
+
+q = MoistureMassFractions(qᵛ⁺, qˡ, zero(qᵗ))
+cᵖᵐ = mixture_heat_capacity(q, thermo)
+g = thermo.gravitational_acceleration
+z = 0.0
+ℒˡᵣ = thermo.liquid.reference_latent_heat
+e = cᵖᵐ * T + g * z - ℒˡᵣ * qˡ</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">289449.7954526551</code></pre><p>Moist static energy has units <span>$\mathrm{m^2 / s^2}$</span>, or <span>$\mathrm{J}{kg}$</span>. Next we show that the saturation adjustment solver recovers the input temperature by passing it an &quot;unadjusted&quot; moisture mass fraction into <code>compute_temperature</code>,</p><pre><code class="language-julia hljs">using Breeze.Microphysics: WarmPhaseSaturationAdjustment, compute_temperature
+microphysics = WarmPhaseSaturationAdjustment()
+
+q₀ = MoistureMassFractions(qᵗ, zero(qᵗ), zero(qᵗ))
+𝒰 = Breeze.Thermodynamics.MoistStaticEnergyState(e, q₀, z, p)
+T★ = compute_temperature(𝒰, microphysics, thermo)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">288.0000014231995</code></pre><p>Finally, we note that the saturation adjustment solver is initialized with a guess corresponding to the temperature in unsaturated conditions,</p><pre><code class="language-julia hljs">cᵖᵐ₁ = mixture_heat_capacity(q₀, thermo)
+T₁ = (e - g * z) / cᵖᵐ₁</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">285.13288359502644</code></pre><p>The difference between <span>$T₁$</span> and the solution <span>$T_\mathrm{eq}$</span> is <span>$T_\mathrm{eq} - T₁ = ℒˡᵣ qˡ / cᵖᵐ$</span> and is therefore strictly positive. In other words, <span>$T₁$</span> represents a lower bound.</p><p>To generate a second guess for the secant solver, we start by estimating the liquid mass fraction using the guess <span>$T = T₁$</span>,</p><pre><code class="language-julia hljs">qᵛ⁺₂ = adjustment_saturation_specific_humidity(T₁, p, qᵗ, thermo)
+qˡ₁ = qᵗ - qᵛ⁺₂</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">0.00338954186544636</code></pre><p>In general, this represents an <em>overestimate</em> of the liquid mass fraction, because <span>$qᵛ⁺₂$</span> is underestimated by the too-low temperature <span>$T₁$</span>. We thus increment the first guess by half of the difference implied by the estimate <span>$qˡ₁$</span>,</p><pre><code class="language-julia hljs">q₂ = MoistureMassFractions(qᵛ⁺₂, qˡ₁, zero(qᵗ))
+cᵖᵐ₂ = mixture_heat_capacity(q₂, thermo)
+ΔT = ℒˡᵣ * qˡ₁ / cᵖᵐ₂
+T₂ = T₁ + ΔT / 2</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">289.27571174858616</code></pre><p>The residual looks like</p><pre><code class="language-julia hljs">using Breeze.Microphysics: saturation_adjustment_residual
+using CairoMakie
+
+T = 230:0.5:320
+r = [saturation_adjustment_residual(Tʲ, 𝒰, thermo) for Tʲ in T]
+qᵛ⁺ = [adjustment_saturation_specific_humidity(Tʲ, p, qᵗ, thermo) for Tʲ in T]
+
+fig = Figure()
+axr = Axis(fig[1, 1], xlabel=&quot;Temperature (K)&quot;, ylabel=&quot;Saturation adjustment residual (K)&quot;)
+axq = Axis(fig[2, 1], xlabel=&quot;Temperature (K)&quot;, ylabel=&quot;Estimated liquid fraction&quot;)
+lines!(axr, T, r)
+scatter!(axr, 288, 0, marker=:star5, markersize=30, color=:tomato)
+
+lines!(axq, T, max.(0, qᵗ .- qᵛ⁺))
+
+fig</code></pre><img src="1cb22282.svg" alt="Example block output"/><p>There is a kink at the temperature wherein the estimated liquid mass fraction bottoms out.</p><h3 id="Equilibrium-states-with-varying-total-specific-humidity"><a class="docs-heading-anchor" href="#Equilibrium-states-with-varying-total-specific-humidity">Equilibrium states with varying total specific humidity</a><a id="Equilibrium-states-with-varying-total-specific-humidity-1"></a><a class="docs-heading-anchor-permalink" href="#Equilibrium-states-with-varying-total-specific-humidity" title="Permalink"></a></h3><p>As a second example, we examine the dependence of temperature on total specific humidity when the moist static energy is held fixed.</p><pre><code class="language-julia hljs">using Breeze.Thermodynamics: MoistStaticEnergyState
+
+T₀ = 288
+cᵖᵈ = thermo.dry_air.heat_capacity
+e₀ = cᵖᵈ * T₀ # representative value
+z = 0.0
+p = 101325.0
+
+# Vary the total moisture mass fraction:
+qᵗ = 0:1e-4:0.035 # [kg kg⁻¹]
+
+T = zeros(length(qᵗ))
+qˡ = zeros(length(qᵗ))
+
+for (i, qᵗⁱ) in enumerate(qᵗ)
+    q = MoistureMassFractions(qᵗⁱ, 0.0, 0.0)
+    𝒰 = MoistStaticEnergyState(e₀, q, z, p)
+    T[i] = compute_temperature(𝒰, microphysics, thermo)
+    qᵛ⁺ = Breeze.Microphysics.adjustment_saturation_specific_humidity(T[i], p, qᵗⁱ, thermo)
+    qˡ[i] = max(0, qᵗⁱ - qᵛ⁺)
+end
+
+using CairoMakie
+
+# Hard code the transition index here, e.g. 105 (adjust to your needs)
+transition_idx = 105
+
+fig = Figure()
+axT = Axis(fig[1, 1], xlabel=&quot;Total specific humidity (kg kg⁻¹)&quot;, ylabel=&quot;Temperature (ᵒK)&quot;)
+axq = Axis(fig[2, 1], xlabel=&quot;Total specific humidity (kg kg⁻¹)&quot;, ylabel=&quot;Liquid mass fraction&quot;)
+
+lines!(axT, qᵗ, T)
+lines!(axq, qᵗ, qˡ)
+
+idx = searchsortedfirst(qˡ, 1e-4)
+vlines!(axT, qᵗ[idx], color=:gray, linestyle=:dash, linewidth=2)
+vlines!(axq, qᵗ[idx], color=:gray, linestyle=:dash, linewidth=2)
+
+text!(axq, &quot;unsaturated, clear&quot;, position=(qᵗ[idx-5], 4e-3), align=(:right, :top))
+text!(axq, &quot;saturated and cloudy →&quot;, position=(qᵗ[idx+5], 8e-3), align=(:left, :top))
+
+fig</code></pre><img src="1ffe02ea.svg" alt="Example block output"/><h3 id="Saturation-adjustment-with-varying-height"><a class="docs-heading-anchor" href="#Saturation-adjustment-with-varying-height">Saturation adjustment with varying height</a><a id="Saturation-adjustment-with-varying-height-1"></a><a class="docs-heading-anchor-permalink" href="#Saturation-adjustment-with-varying-height" title="Permalink"></a></h3><p>For a third example, we consider a state with constant moist static energy and total specific humidity (equivalently, a constant <span>$θ$</span> in this reference state), but at varying heights:</p><pre><code class="language-julia hljs">using Breeze
+using Breeze.AtmosphereModels: compute_temperature
+
+grid = RectilinearGrid(size=100, z=(0, 1e4), topology=(Flat, Flat, Bounded))
+thermo = ThermodynamicConstants()
+
+θ₀ = 288
+p₀ = 101325
+reference_state = ReferenceState(grid, thermo;
+                                 base_pressure = p₀,
+                                 potential_temperature = θ₀)
+
+qᵗ = 0.005
+q = MoistureMassFractions(qᵗ, 0.0, 0.0)
+
+z = znodes(grid, Center())
+T = zeros(grid.Nz)
+qᵛ⁺ = zeros(grid.Nz)
+qˡ = zeros(grid.Nz)
+rh = zeros(grid.Nz)
+
+# Set a constant moist static energy referenced to z = 0, clear air
+cᵖᵐ = mixture_heat_capacity(q, thermo)
+Rᵈ = Breeze.Thermodynamics.dry_air_gas_constant(thermo)
+g = thermo.gravitational_acceleration
+
+for k = 1:grid.Nz
+    pᵣ = reference_state.pressure[1, 1, k]
+    Tᵣ = θ₀ * (pᵣ / p₀)^(Rᵈ / cᵖᵈ)
+    e₀ = cᵖᵐ * Tᵣ + g * z[k]
+    𝒰 = MoistStaticEnergyState(e₀, q, z[k], pᵣ)
+    T[k] = compute_temperature(𝒰, microphysics, thermo)
+
+    # Saturation specific humidity via adjustment formula using T[k], pᵣ, and qᵗ
+    qᵛ⁺[k] = Breeze.Microphysics.adjustment_saturation_specific_humidity(T[k], pᵣ, qᵗ, thermo)
+    qˡ[k] = max(0, qᵗ - qᵛ⁺[k])
+    rh[k] = 100 * min(qᵗ, qᵛ⁺[k]) / qᵛ⁺[k]
+end
+
+cᵖᵈ = thermo.dry_air.heat_capacity
+g = thermo.gravitational_acceleration
+
+fig = Figure(size=(700, 350))
+
+yticks = 0:2e3:10e3
+
+axT = Axis(fig[1, 1:2]; xlabel = &quot;Temperature (ᵒK)&quot;, ylabel = &quot;Height (m)&quot;, yticks)
+axq⁺ = Axis(fig[1, 3]; xlabel = &quot;Saturation\n specific humidity\n (kg kg⁻¹)&quot;,
+                       yticks, yticklabelsvisible = false)
+axqˡ = Axis(fig[1, 4]; xlabel = &quot;Liquid\n specific humidity\n (kg kg⁻¹)&quot;,
+                       yticks, yticklabelsvisible = false)
+
+axrh = Axis(fig[1, 5]; xlabel = &quot;Relative\n humidity (%)&quot;,
+                       xticks = 0:20:100,
+                       yticks, yticklabelsvisible = false)
+
+lines!(axT, T, z)
+lines!(axT, T[1] .- g * z / cᵖᵈ, z, linestyle = :dash, color = :orange, linewidth = 2)
+lines!(axq⁺, qᵛ⁺, z)
+lines!(axqˡ, qˡ, z)
+lines!(axrh, rh, z)
+
+fig</code></pre><img src="3e679033.svg" alt="Example block output"/></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../microphysics_overview/">« Overview</a><a class="docs-footer-nextpage" href="../../dycore_equations_algorithms/">Dycore equations and algorithms »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.15.0 on <span class="colophon-date" title="Monday 10 November 2025 16:18">Monday 10 November 2025</span>. Using Julia version 1.12.1.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
