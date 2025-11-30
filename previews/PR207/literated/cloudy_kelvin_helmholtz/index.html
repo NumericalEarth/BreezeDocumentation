@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Cloudy Kelvin-Helmholtz instability · Breeze</title><meta name="title" content="Cloudy Kelvin-Helmholtz instability · Breeze"/><meta property="og:title" content="Cloudy Kelvin-Helmholtz instability · Breeze"/><meta property="twitter:title" content="Cloudy Kelvin-Helmholtz instability · Breeze"/><meta name="description" content="Documentation for Breeze."/><meta property="og:description" content="Documentation for Breeze."/><meta property="twitter:description" content="Documentation for Breeze."/><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../search_index.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">Breeze</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><span class="tocitem">Examples</span><ul><li><a class="tocitem" href="../thermal_bubble/">Thermal bubble</a></li><li class="is-active"><a class="tocitem" href>Cloudy Kelvin-Helmholtz instability</a><ul class="internal"><li><a class="tocitem" href="#Domain-and-grid"><span>Domain and grid</span></a></li><li><a class="tocitem" href="#Model-and-microphysics"><span>Model and microphysics</span></a></li><li><a class="tocitem" href="#Background-thermodynamic-state"><span>Background thermodynamic state</span></a></li><li><a class="tocitem" href="#Shear-and-moisture-profiles"><span>Shear and moisture profiles</span></a></li><li><a class="tocitem" href="#The-Kelvin-Helmholtz-instability"><span>The Kelvin-Helmholtz instability</span></a></li><li><a class="tocitem" href="#Define-initial-conditions"><span>Define initial conditions</span></a></li><li><a class="tocitem" href="#Set-up-and-run-the-simulation"><span>Set up and run the simulation</span></a></li><li><a class="tocitem" href="#Output"><span>Output</span></a></li><li><a class="tocitem" href="#Run!"><span>Run!</span></a></li><li><a class="tocitem" href="#Read-output-and-visualize"><span>Read output and visualize</span></a></li></ul></li></ul></li><li><a class="tocitem" href="../../thermodynamics/">Thermodynamics</a></li><li><span class="tocitem">Microphysics</span><ul><li><a class="tocitem" href="../../microphysics/microphysics_overview/">Overview</a></li><li><a class="tocitem" href="../../microphysics/warm_phase_saturation_adjustment/">Warm-phase saturation adjustment</a></li><li><a class="tocitem" href="../../microphysics/mixed_phase_saturation_adjustment/">Mixed-phase saturation adjustment</a></li></ul></li><li><span class="tocitem">Developers</span><ul><li><input class="collapse-toggle" id="menuitem-5-1" type="checkbox"/><label class="tocitem" for="menuitem-5-1"><span class="docs-label">Microphysics</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../developer/microphysics_interface/">Microphysics Interface</a></li></ul></li></ul></li><li><a class="tocitem" href="../../dycore_equations_algorithms/">Dycore equations and algorithms</a></li><li><span class="tocitem">Appendix</span><ul><li><a class="tocitem" href="../../appendix/notation/">Notation</a></li></ul></li><li><a class="tocitem" href="../../references/">References</a></li><li><a class="tocitem" href="../../api/">API</a></li><li><a class="tocitem" href="../../contributing/">Contributors guide</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Examples</a></li><li class="is-active"><a href>Cloudy Kelvin-Helmholtz instability</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Cloudy Kelvin-Helmholtz instability</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/NumericalEarth/Breeze.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/NumericalEarth/Breeze.jl/blob/main/examples/cloudy_kelvin_helmholtz.jl" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Cloudy-Kelvin-Helmholtz-instability"><a class="docs-heading-anchor" href="#Cloudy-Kelvin-Helmholtz-instability">Cloudy Kelvin-Helmholtz instability</a><a id="Cloudy-Kelvin-Helmholtz-instability-1"></a><a class="docs-heading-anchor-permalink" href="#Cloudy-Kelvin-Helmholtz-instability" title="Permalink"></a></h1><p>This example sets up a two-dimensional (<span>$x$</span>–<span>$z$</span>) Kelvin–Helmholtz instability in a moist, stably stratified atmosphere.</p><p>The configuration is intentionally simple but reasonably &quot;meteorological&quot;:</p><ul><li>We impose horizontal wind <span>$U(z)$</span> with a shear layer.</li><li>We impose a stably stratified potential temperature profile <span>$θ(z)$</span> with a specified dry <a href="https://en.wikipedia.org/wiki/Brunt–Väisälä_frequency">Brunt–Väisälä frequency</a> <span>$N$</span>.</li><li>We embed a Gaussian moisture layer <span>$q(z)$</span> centered on the shear layer.</li></ul><p>As the shear layer rolls up, the moist layer is advected and deformed, producing billow-like patterns reminiscent of observed &quot;wave clouds&quot;. Breeze encapsulates much of this thermodynamics for us via the <code>AtmosphereModel</code> and saturation adjustment.</p><pre><code class="language-julia hljs">using Breeze
+using Oceananigans.Units
+using CairoMakie
+using Printf</code></pre><h2 id="Domain-and-grid"><a class="docs-heading-anchor" href="#Domain-and-grid">Domain and grid</a><a id="Domain-and-grid-1"></a><a class="docs-heading-anchor-permalink" href="#Domain-and-grid" title="Permalink"></a></h2><p>We use a 2D <span>$x$</span>–<span>$z$</span> slice with periodic boundaries in <span>$x$</span> and rigid, impermeable boundaries at the top and bottom.</p><p>Grid resolution is modest but enough to clearly resolve the Kelvin-Helmholtz billows and rolled-up moisture filament.</p><pre><code class="language-julia hljs">Nx = 384   # horizontal resolution
+Nz = 128   # vertical resolution
+
+Lx = 10e3  # domain length
+Lz =  3e3  # domain height
+
+grid = RectilinearGrid(; size = (Nx, Nz), x = (0, Lx), z = (0, Lz),
+                         topology = (Periodic, Flat, Bounded))</code></pre><pre><code class="nohighlight hljs">384×1×128 RectilinearGrid{Float64, Periodic, Flat, Bounded} on CPU with 3×0×3 halo
+├── Periodic x ∈ [0.0, 10000.0) regularly spaced with Δx=26.0417
+├── Flat y                      
+└── Bounded  z ∈ [0.0, 3000.0]  regularly spaced with Δz=23.4375</code></pre><h2 id="Model-and-microphysics"><a class="docs-heading-anchor" href="#Model-and-microphysics">Model and microphysics</a><a id="Model-and-microphysics-1"></a><a class="docs-heading-anchor-permalink" href="#Model-and-microphysics" title="Permalink"></a></h2><p>We construct the AtmosphereModel model with saturation adjustment microphysics.</p><pre><code class="language-julia hljs">microphysics = SaturationAdjustment(equilibrium=WarmPhaseEquilibrium())
+model = AtmosphereModel(grid; advection=WENO(order=5), microphysics)</code></pre><pre><code class="nohighlight hljs">AtmosphereModel{CPU, RectilinearGrid}(time = 0 seconds, iteration = 0)
+├── grid: 384×1×128 RectilinearGrid{Float64, Periodic, Flat, Bounded} on CPU with 3×0×3 halo
+├── formulation: AnelasticFormulation(p₀=101325.0, θ₀=288.0)
+├── timestepper: RungeKutta3TimeStepper
+├── advection scheme: WENO{3, Float64, Float32}(order=5)
+├── tracers: ()
+├── coriolis: Nothing
+└── microphysics: SaturationAdjustment</code></pre><h2 id="Background-thermodynamic-state"><a class="docs-heading-anchor" href="#Background-thermodynamic-state">Background thermodynamic state</a><a id="Background-thermodynamic-state-1"></a><a class="docs-heading-anchor-permalink" href="#Background-thermodynamic-state" title="Permalink"></a></h2><p>We set a reference potential temperature <span>$θ₀$</span> and a linear <span>$θ$</span> gradient that corresponds to a desired dry Brunt–Väisälä frequency <span>$N$</span>. For a dry atmosphere,</p><p class="math-container">\[N² = \frac{g}{θ₀} \frac{∂θ}{∂z} ,\]</p><p>We initialize the potential temperature that gives constant Brunt–Väisälä frequency, representative of mid-tropospheric stability. The (dry) Brunt–Väisälä frequency is</p><p class="math-container">\[N² = \frac{g}{θ} \frac{∂θ}{∂z}\]</p><p>and thus, for constant <span>$N²$</span> the above implies <span>$θ = θ₀ \exp{(N² z / g)}$</span>.</p><pre><code class="language-julia hljs">thermo = ThermodynamicConstants()
+g = thermo.gravitational_acceleration
+θ₀ = model.formulation.reference_state.potential_temperature
+N = 0.01                  # target dry Brunt–Väisälä frequency (s⁻¹)
+θᵇ(z) = θ₀ * exp(N^2 * z / g)</code></pre><pre><code class="nohighlight hljs">θᵇ (generic function with 1 method)</code></pre><h2 id="Shear-and-moisture-profiles"><a class="docs-heading-anchor" href="#Shear-and-moisture-profiles">Shear and moisture profiles</a><a id="Shear-and-moisture-profiles-1"></a><a class="docs-heading-anchor-permalink" href="#Shear-and-moisture-profiles" title="Permalink"></a></h2><p>We want:</p><ul><li>A shear layer centered at height <span>$z₀$</span> with the zonal flow transitioning from a lower speed <span>$U_{\rm bot}$</span> to an upper speed <span>$U_{\rm top}$</span>.</li><li>A moist layer centered at the same height with a Gaussian profile.</li></ul><p>The above  mimics a moist, stably stratified layer embedded in stronger flow above and weaker flow below.</p><p>First, we set up the shear layer using a <span>$\tanh$</span> profile:</p><pre><code class="language-julia hljs">z₀    = 1e3     # center of shear &amp; moist layer (m)
+Δzᶸ   = 150     # shear layer half-thickness (m)
+U_top = 25      # upper-layer wind (m/s)
+U_bot =  5      # lower-layer wind (m/s)
+uᵇ(z) = U_bot + (U_top - U_bot) * (1 + tanh((z - z₀) / Δzᶸ)) / 2</code></pre><pre><code class="nohighlight hljs">uᵇ (generic function with 1 method)</code></pre><p>For the moisture layer, we use a Gaussian in <span>$z$</span> centered at <span>$z₀$</span>:</p><pre><code class="language-julia hljs">q_max = 0.012  # peak specific humidity (kg/kg)
+Δz_q = 200     # moist layer half-width (m)
+qᵇ(z) = q_max * exp(-(z - z₀)^2 / 2Δz_q^2)</code></pre><pre><code class="nohighlight hljs">qᵇ (generic function with 1 method)</code></pre><h2 id="The-Kelvin-Helmholtz-instability"><a class="docs-heading-anchor" href="#The-Kelvin-Helmholtz-instability">The Kelvin-Helmholtz instability</a><a id="The-Kelvin-Helmholtz-instability-1"></a><a class="docs-heading-anchor-permalink" href="#The-Kelvin-Helmholtz-instability" title="Permalink"></a></h2><p>The Miles–Howard criterion tells us that Kelvin–Helmholtz instability occurs where the Richardson number,</p><p class="math-container">\[Ri = \frac{N²}{(∂uᵇ/∂z)²}\]</p><p>is less than 1/4 (<a href="../../references/#Miles1961">Miles, 1961</a>; <a href="../../references/#Howard1961">Howard, 1961</a>). With the parameters chosen above this is the case.</p><p>Let&#39;s plot the initial state as well as the Richardson number.</p><pre><code class="language-julia hljs">z = znodes(grid, Center())
+
+dudz = @. (U_top - U_bot) * sech((z - z₀) / Δzᶸ)^2 / 2Δzᶸ
+Ri = N^2 ./ dudz.^2
+
+using CairoMakie
+
+fig = Figure(size=(800, 500))
+
+axu = Axis(fig[1, 1], xlabel = &quot;uᵇ (m/s)&quot;, ylabel = &quot;z (m)&quot;, title = &quot;Zonal velocity&quot;)
+axq = Axis(fig[1, 2], xlabel = &quot;qᵇ (kg/kg)&quot;, title=&quot;Total liquid&quot;)
+axθ = Axis(fig[1, 3], xlabel = &quot;θᵇ (K)&quot;, title=&quot;Potential temperature&quot;)
+axR = Axis(fig[1, 4], xlabel = &quot;Ri&quot;, ylabel=&quot;z (m)&quot;, title=&quot;Richardson number&quot;)
+
+lines!(axu, uᵇ.(z), z)
+lines!(axq, qᵇ.(z), z)
+lines!(axθ, θᵇ.(z), z)
+lines!(axR, Ri, z)
+lines!(axR, [1/4, 1/4], [0, Lz], linestyle = :dash, color = :black)
+xlims!(axR, 0, 0.8)
+axR.xticks = 0:0.25:1
+
+for ax in (axq, axθ, axR)
+    ax.yticksvisible = false
+    ax.yticklabelsvisible = false
+    ax.ylabelvisible = false
+end
+
+fig</code></pre><p><img src="../cloudy_kelvin_helmholtz-16.svg" alt/></p><h2 id="Define-initial-conditions"><a class="docs-heading-anchor" href="#Define-initial-conditions">Define initial conditions</a><a id="Define-initial-conditions-1"></a><a class="docs-heading-anchor-permalink" href="#Define-initial-conditions" title="Permalink"></a></h2><p>We initialize the model via Oceananigans <code>set!</code>, adding also a bit of random noise.</p><pre><code class="language-julia hljs">δθ = 0.01
+δu = 1e-3
+δq = 0.05 * q_max
+
+θᵢ(x, z) = θᵇ(z) + δθ * rand()
+qᵗᵢ(x, z) = qᵇ(z) + δq * rand()
+uᵢ(x, z) = uᵇ(z) + δu * rand()
+
+set!(model; u=uᵢ, qᵗ=qᵗᵢ, θ=θᵢ)</code></pre><h2 id="Set-up-and-run-the-simulation"><a class="docs-heading-anchor" href="#Set-up-and-run-the-simulation">Set up and run the simulation</a><a id="Set-up-and-run-the-simulation-1"></a><a class="docs-heading-anchor-permalink" href="#Set-up-and-run-the-simulation" title="Permalink"></a></h2><p>We construct a simulation and use the time-step wizard to keep the CFL number under control.</p><pre><code class="language-julia hljs">stop_time = 12minutes   # total simulation time
+simulation = Simulation(model; Δt=1, stop_time)
+conjure_time_step_wizard!(simulation; cfl = 0.7)</code></pre><p>We also add a progress callback:</p><pre><code class="language-julia hljs">function progress(sim)
+    u, v, w = model.velocities
+    max_w = maximum(abs, w)
+    @info @sprintf(&quot;iteration: %d, time: %s, Δt: %s, max|w|: %.2e m/s&quot;,
+                   iteration(sim), prettytime(sim), prettytime(sim.Δt), max_w)
+    return nothing
+end
+
+add_callback!(simulation, progress, TimeInterval(1minute))</code></pre><h2 id="Output"><a class="docs-heading-anchor" href="#Output">Output</a><a id="Output-1"></a><a class="docs-heading-anchor-permalink" href="#Output" title="Permalink"></a></h2><p>We save the model velocities, the cross-stream component of vorticity, <span>$ξ = ∂_z u - ∂_x w$</span>, the potential temperatures and the specific humidities (vapour, liquid, ice).</p><pre><code class="language-julia hljs">u, v, w = model.velocities
+ξ = ∂z(u) - ∂x(w)
+θ = PotentialTemperatureField(model)
+outputs = merge(model.velocities, model.microphysical_fields, (; ξ, θ))
+
+filename = &quot;wave_clouds.jld2&quot;
+
+output_writer = JLD2Writer(model, outputs;
+                           filename,
+                           schedule = TimeInterval(4),
+                           overwrite_existing = true)
+
+simulation.output_writers[:fields] = output_writer</code></pre><pre><code class="nohighlight hljs">JLD2Writer scheduled on TimeInterval(4 seconds):
+├── filepath: wave_clouds.jld2
+├── 7 outputs: (u, v, w, qᵛ, qˡ, ξ, θ)
+├── array_type: Array{Float32}
+├── including: [:grid]
+├── file_splitting: NoFileSplitting
+└── file size: 56.5 KiB</code></pre><h2 id="Run!"><a class="docs-heading-anchor" href="#Run!">Run!</a><a id="Run!-1"></a><a class="docs-heading-anchor-permalink" href="#Run!" title="Permalink"></a></h2><p>Now we are ready to run the simulation.</p><pre><code class="language-julia hljs">run!(simulation)</code></pre><pre><code class="nohighlight hljs">[ Info: Initializing simulation...
+[ Info: iteration: 0, time: 0 seconds, Δt: 729.129 ms, max|w|: 3.96e-04 m/s
+[ Info:     ... simulation initialization complete (3.230 seconds)
+[ Info: Executing initial time step...
+[ Info:     ... initial time step complete (2.584 seconds).
+[ Info: iteration: 90, time: 1 minute, Δt: 728.142 ms, max|w|: 2.45e-01 m/s
+[ Info: iteration: 180, time: 2 minutes, Δt: 727.758 ms, max|w|: 9.03e-01 m/s
+[ Info: iteration: 270, time: 3 minutes, Δt: 657.898 ms, max|w|: 2.16e+00 m/s
+[ Info: iteration: 375, time: 4 minutes, Δt: 595.795 ms, max|w|: 2.90e+00 m/s
+[ Info: iteration: 480, time: 5 minutes, Δt: 565.464 ms, max|w|: 3.40e+00 m/s
+[ Info: iteration: 600, time: 6 minutes, Δt: 529.129 ms, max|w|: 3.88e+00 m/s
+[ Info: iteration: 720, time: 7 minutes, Δt: 533.825 ms, max|w|: 7.80e+00 m/s
+[ Info: iteration: 843, time: 8 minutes, Δt: 498.734 ms, max|w|: 9.59e+00 m/s
+[ Info: iteration: 974, time: 9 minutes, Δt: 462.695 ms, max|w|: 1.16e+01 m/s
+[ Info: iteration: 1109, time: 10 minutes, Δt: 459.798 ms, max|w|: 1.17e+01 m/s
+[ Info: iteration: 1253, time: 11 minutes, Δt: 439.473 ms, max|w|: 1.20e+01 m/s
+[ Info: Simulation is stopping after running for 2.702 minutes.
+[ Info: Simulation time 12 minutes equals or exceeds stop time 12 minutes.
+[ Info: iteration: 1389, time: 12 minutes, Δt: 452.423 ms, max|w|: 1.15e+01 m/s
+</code></pre><h2 id="Read-output-and-visualize"><a class="docs-heading-anchor" href="#Read-output-and-visualize">Read output and visualize</a><a id="Read-output-and-visualize-1"></a><a class="docs-heading-anchor-permalink" href="#Read-output-and-visualize" title="Permalink"></a></h2><p>We load the saved output as Oceananigans&#39; <code>FieldTimeSeries</code></p><pre><code class="language-julia hljs">ξt = FieldTimeSeries(filename, &quot;ξ&quot;)
+θt = FieldTimeSeries(filename, &quot;θ&quot;)
+qˡt = FieldTimeSeries(filename, &quot;qˡ&quot;)
+
+times = ξt.times
+Nt = length(ξt)</code></pre><pre><code class="nohighlight hljs">181</code></pre><p>and then use CairoMakie to plot and animate the output.</p><pre><code class="language-julia hljs">n = Observable(Nt)
+
+ξn = @lift ξt[$n]
+θn = @lift θt[$n]
+qˡn = @lift qˡt[$n]
+
+fig = Figure(size=(800, 800), fontsize=14)
+
+axξ = Axis(fig[1, 1], ylabel=&quot;z (m)&quot;, title = &quot;Vorticity&quot;, titlesize = 20)
+axl = Axis(fig[2, 1], ylabel=&quot;z (m)&quot;, title = &quot;Liquid mass fraction&quot;, titlesize = 20)
+axθ = Axis(fig[3, 1], xlabel=&quot;x (m)&quot;, ylabel=&quot;z (m)&quot;, title = &quot;Potential temperature&quot;, titlesize = 20)
+
+hmξ = heatmap!(axξ, ξn, colormap = :balance, colorrange = (-0.25, 0.25))
+hml = heatmap!(axl, qˡn, colormap = Reverse(:Blues_4), colorrange = (0, 0.003))
+hmθ = heatmap!(axθ, θn, colormap = :thermal, colorrange = extrema(θt))
+
+Colorbar(fig[1, 2], hmξ, label = &quot;s⁻¹&quot;, vertical = true)
+Colorbar(fig[2, 2], hml, label = &quot;kg/kg&quot;, vertical = true)
+Colorbar(fig[3, 2], hmθ, label = &quot;Κ&quot;, vertical = true)
+
+fig</code></pre><p><img src="../cloudy_kelvin_helmholtz-31.svg" alt/></p><p>We can also make a movie:</p><pre><code class="language-julia hljs">CairoMakie.record(fig, &quot;wave_clouds.mp4&quot;, 1:Nt, framerate = 12) do nn
+    n[] = nn
+end</code></pre><p><video src="../wave_clouds.mp4" controls="true" title><a href="../wave_clouds.mp4"></a></video></p><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../thermal_bubble/">« Thermal bubble</a><a class="docs-footer-nextpage" href="../../thermodynamics/">Thermodynamics »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.16.1 on <span class="colophon-date" title="Monday 24 November 2025 20:52">Monday 24 November 2025</span>. Using Julia version 1.12.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

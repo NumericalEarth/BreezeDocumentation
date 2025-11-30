@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Saturated internal wave · Breeze</title><meta name="title" content="Saturated internal wave · Breeze"/><meta property="og:title" content="Saturated internal wave · Breeze"/><meta property="twitter:title" content="Saturated internal wave · Breeze"/><meta name="description" content="Documentation for Breeze."/><meta property="og:description" content="Documentation for Breeze."/><meta property="twitter:description" content="Documentation for Breeze."/><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../search_index.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">Breeze</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><span class="tocitem">Examples</span><ul><li><a class="tocitem" href="../thermal_bubble/">Thermal bubble</a></li><li><a class="tocitem" href="../cloudy_kelvin_helmholtz/">Cloudy Kelvin-Helmholtz instability</a></li><li class="is-active"><a class="tocitem" href>Saturated internal wave</a><ul class="internal"><li><a class="tocitem" href="#Grid-and-AtmosphereModel"><span>Grid and AtmosphereModel</span></a></li><li><a class="tocitem" href="#Background-stratification-and-supersaturation"><span>Background stratification and supersaturation</span></a></li><li><a class="tocitem" href="#Internal-wave-polarization-relations"><span>Internal wave polarization relations</span></a></li><li class="toplevel"><a class="tocitem" href="###-Diagnostics:-observed-vs-predicted-buoyancy-frequency"><span>## Diagnostics: observed vs predicted buoyancy frequency</span></a></li><li class="toplevel"><a class="tocitem" href="###-Visualization"><span>## Visualization</span></a></li><li><a class="tocitem" href="#Optional-animation"><span>Optional animation</span></a></li></ul></li></ul></li><li><a class="tocitem" href="../../thermodynamics/">Thermodynamics</a></li><li><span class="tocitem">Microphysics</span><ul><li><a class="tocitem" href="../../microphysics/microphysics_overview/">Overview</a></li><li><a class="tocitem" href="../../microphysics/warm_phase_saturation_adjustment/">Warm-phase saturation adjustment</a></li><li><a class="tocitem" href="../../microphysics/mixed_phase_saturation_adjustment/">Mixed-phase saturation adjustment</a></li></ul></li><li><span class="tocitem">Developers</span><ul><li><input class="collapse-toggle" id="menuitem-5-1" type="checkbox"/><label class="tocitem" for="menuitem-5-1"><span class="docs-label">Microphysics</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../developer/microphysics_interface/">Microphysics Interface</a></li></ul></li></ul></li><li><a class="tocitem" href="../../dycore_equations_algorithms/">Dycore equations and algorithms</a></li><li><span class="tocitem">Appendix</span><ul><li><a class="tocitem" href="../../appendix/notation/">Notation</a></li></ul></li><li><a class="tocitem" href="../../references/">References</a></li><li><a class="tocitem" href="../../api/">API</a></li><li><a class="tocitem" href="../../contributing/">Contributors guide</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Examples</a></li><li class="is-active"><a href>Saturated internal wave</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Saturated internal wave</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/NumericalEarth/Breeze.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/NumericalEarth/Breeze.jl/blob/main/examples/moist_internal_wave.jl" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Saturated-internal-wave-packet"><a class="docs-heading-anchor" href="#Saturated-internal-wave-packet">Saturated internal wave packet</a><a id="Saturated-internal-wave-packet-1"></a><a class="docs-heading-anchor-permalink" href="#Saturated-internal-wave-packet" title="Permalink"></a></h1><p>This literate example adapts <a href="https://clima.github.io/OceananigansDocumentation/stable/literated/internal_wave/">Oceananigans&#39; internal wave example</a> to AtmosphereModel to explore how slight supersaturation modifies the buoyancy frequency following the study by <a href="../../references/#durran1982effects">Durran and Klemp (1982)</a>. The idea is simple:</p><ol><li>Build a 2-D <code>x-z</code> anelastic AtmosphereModel with a realistic dry stratification.</li><li>Initialize total specific humidity <code>qᵗ</code> just <strong>above</strong> saturation everywhere.</li><li>Launch a Gaussian inertia-gravity wave packet.</li><li>Output fields at high cadence to resolve oscillations.</li><li>Compare the oscillation frequency we observe with (a) the dry/naive Brunt–Väisälä frequency and (b) the saturated (moist) Brunt–Väisälä frequency.</li></ol><p>The same script also produces a quick-look animation of the propagating packet.</p><pre><code class="language-julia hljs">using Breeze
+using Breeze.Thermodynamics: dry_air_gas_constant, vapor_gas_constant
+using Oceananigans.Units
+using CairoMakie
+using Printf</code></pre><h2 id="Grid-and-AtmosphereModel"><a class="docs-heading-anchor" href="#Grid-and-AtmosphereModel">Grid and AtmosphereModel</a><a id="Grid-and-AtmosphereModel-1"></a><a class="docs-heading-anchor-permalink" href="#Grid-and-AtmosphereModel" title="Permalink"></a></h2><pre><code class="language-julia hljs">Nx, Nz = 128, 128
+Lx, Lz = 30_000, 12_000
+
+grid = RectilinearGrid(size = (Nx, Nz),
+                       x = (-Lx/2, Lx/2),
+                       z = (-Lz/2, Lz/2),
+                       topology = (Periodic, Flat, Bounded))
+
+microphysics = SaturationAdjustment()  # instant warm-phase adjustment
+advection = WENO(order=5)
+model = AtmosphereModel(grid; advection, microphysics)
+
+thermo = model.thermodynamics
+reference_state = model.formulation.reference_state</code></pre><pre><code class="nohighlight hljs">ReferenceState{Float64}(p₀=101325.0, θ₀=288.0)</code></pre><h2 id="Background-stratification-and-supersaturation"><a class="docs-heading-anchor" href="#Background-stratification-and-supersaturation">Background stratification and supersaturation</a><a id="Background-stratification-and-supersaturation-1"></a><a class="docs-heading-anchor-permalink" href="#Background-stratification-and-supersaturation" title="Permalink"></a></h2><pre><code class="language-julia hljs">g = thermo.gravitational_acceleration
+p₀ = reference_state.base_pressure
+θ₀ = reference_state.potential_temperature
+Rᵈ = dry_air_gas_constant(thermo)
+Rᵛ = vapor_gas_constant(thermo)
+cᵖᵈ = thermo.dry_air.heat_capacity
+ρ₀ = p₀ / (Rᵈ * θ₀)
+
+N = 0.012
+θᵇ(x, z) = θ₀ * exp(N^2 * z / g)
+set!(model, θ=θᵇ)</code></pre><p>Let&#39;s plot</p><pre><code class="language-julia hljs">fig = Figure()
+axe = Axis(fig[1, 1])
+axθ = Axis(fig[1, 2])
+E = Average(model.specific_energy, dims=1) |&gt; Field
+θ = Average(PotentialTemperature(model), dims=1) |&gt; Field
+lines!(axe, E)
+lines!(axθ, θ)</code></pre><pre><code class="nohighlight hljs">Lines{Tuple{Vector{Point{2, Float64}}}}</code></pre><p>And now compute some more things....</p><pre><code class="language-julia hljs">qᵗ = SaturationSpecificHumidity(model, :total_moisture) |&gt; Field
+cᵖᵈ = thermo.dry_air.heat_capacity
+cᵖᵛ = thermo.vapor.heat_capacity
+cᵖᵐ = (1 - qᵗ) * cᵖᵈ + qᵗ * cᵖᵛ
+e₀ = model.specific_energy
+eᵢ = cᵖᵐ / cᵖᵈ * e₀
+set!(model, e=eᵢ, qᵗ=qᵗ)</code></pre><h2 id="Internal-wave-polarization-relations"><a class="docs-heading-anchor" href="#Internal-wave-polarization-relations">Internal wave polarization relations</a><a id="Internal-wave-polarization-relations-1"></a><a class="docs-heading-anchor-permalink" href="#Internal-wave-polarization-relations" title="Permalink"></a></h2><pre><code class="language-julia hljs">λx = 2_000.0
+λz = 2_000.0  # 4 km vertical wavelength
+k = 2π / λx
+m = 2π / λz
+ω = sqrt(N^2 * k^2 / (k^2 + m^2))
+
+Δw = Lx / 8
+δb = 1e-3 * N^2 * Δw
+ϕ(x, z) = k * x + m * z
+a(x, z) = δb * exp(-(x^2 + z^2) / 2Δw^2)
+
+uᵢ(x, z) = - ω / N^2 * a(x, z) * sin(ϕ(x, z))
+wᵢ(x, z) = - ω / N^2 * k / m * a(x, z) * sin(ϕ(x, z)) # ux + wz = 0
+bᵢ(x, z) = a(x, z) * sin(ϕ(x, z))</code></pre><pre><code class="nohighlight hljs">bᵢ (generic function with 1 method)</code></pre><p>Compute energy perturbation</p><pre><code class="language-julia hljs">b = CenterField(grid)
+set!(b, bᵢ)
+T_avg = Average(model.temperature, dims=1) |&gt; Field
+g = thermo.gravitational_acceleration
+e′ = cᵖᵐ * T_avg * b / g
+e₀ = model.specific_energy
+eᵢ = e₀ + e′
+
+set!(model; u=uᵢ, w=wᵢ, e=eᵢ)</code></pre><p>and plot the initial condition</p><pre><code class="language-julia hljs">fig = Figure()
+axθ = Axis(fig[1, 2])
+axw = Axis(fig[1, 2])
+θ = PotentialTemperature(model) |&gt; Field
+u, v, w = model.velocities
+heatmap!(axθ, θ)
+heatmap!(axw, w)
+fig</code></pre><p><img src="../moist_internal_wave-17.svg" alt/></p><p>Now let&#39;s set up a simulation</p><pre><code class="language-julia hljs">Δt = 0.001 * 2π / ω
+stop_time = 8 * 2π / ω
+simulation = Simulation(model; Δt, stop_time)
+
+function progress(sim)
+    w = sim.model.velocities.w
+    msg = @sprintf(&quot;iter: %d, t: %s, max|w| = %.3f m/s&quot;,
+                   iteration(sim), prettytime(sim), maximum(abs, w))
+    @info msg
+    return nothing
+end
+
+add_callback!(simulation, progress, IterationInterval(100))
+
+outputs = (w = model.velocities.w,
+           θ = model.temperature,
+           qᵗ = model.specific_moisture)
+
+filename = &quot;moist_internal_wave.jld2&quot;
+
+writer = JLD2Writer(model, outputs;
+                    filename,
+                    schedule = IterationInterval(10),
+                    overwrite_existing = true)
+
+simulation.output_writers[:fields] = writer
+
+run!(simulation)</code></pre><pre><code class="nohighlight hljs">[ Info: Initializing simulation...
+[ Info: iter: 0, t: 0 seconds, max|w| = 0.001 m/s
+[ Info:     ... simulation initialization complete (1.739 seconds)
+[ Info: Executing initial time step...
+[ Info:     ... initial time step complete (2.545 seconds).
+[ Info: iter: 100, t: 1.234 minutes, max|w| = 0.009 m/s
+[ Info: iter: 200, t: 2.468 minutes, max|w| = 0.018 m/s
+[ Info: iter: 300, t: 3.702 minutes, max|w| = 0.031 m/s
+[ Info: iter: 400, t: 4.937 minutes, max|w| = 0.048 m/s
+[ Info: iter: 500, t: 6.171 minutes, max|w| = 0.074 m/s
+[ Info: iter: 600, t: 7.405 minutes, max|w| = 0.114 m/s
+[ Info: iter: 700, t: 8.639 minutes, max|w| = 0.177 m/s
+[ Info: iter: 800, t: 9.873 minutes, max|w| = 0.273 m/s
+[ Info: iter: 900, t: 11.107 minutes, max|w| = 0.427 m/s
+[ Info: iter: 1000, t: 12.341 minutes, max|w| = 0.670 m/s
+[ Info: iter: 1100, t: 13.575 minutes, max|w| = 1.062 m/s
+[ Info: iter: 1200, t: 14.810 minutes, max|w| = 1.686 m/s
+[ Info: iter: 1300, t: 16.044 minutes, max|w| = 2.680 m/s
+[ Info: iter: 1400, t: 17.278 minutes, max|w| = 4.302 m/s
+[ Info: iter: 1500, t: 18.512 minutes, max|w| = 6.919 m/s
+[ Info: iter: 1600, t: 19.746 minutes, max|w| = 11.044 m/s
+[ Info: iter: 1700, t: 20.980 minutes, max|w| = 17.573 m/s
+[ Info: iter: 1800, t: 22.214 minutes, max|w| = 24.945 m/s
+[ Info: iter: 1900, t: 23.449 minutes, max|w| = 35.398 m/s
+[ Info: iter: 2000, t: 24.683 minutes, max|w| = 44.534 m/s
+[ Info: iter: 2100, t: 25.917 minutes, max|w| = 50.724 m/s
+[ Info: iter: 2200, t: 27.151 minutes, max|w| = 59.345 m/s
+[ Info: iter: 2300, t: 28.385 minutes, max|w| = 54.523 m/s
+[ Info: iter: 2400, t: 29.619 minutes, max|w| = 50.799 m/s
+[ Info: iter: 2500, t: 30.853 minutes, max|w| = 61.551 m/s
+[ Info: iter: 2600, t: 32.087 minutes, max|w| = 65.689 m/s
+[ Info: iter: 2700, t: 33.322 minutes, max|w| = 70.866 m/s
+[ Info: iter: 2800, t: 34.556 minutes, max|w| = 76.235 m/s
+[ Info: iter: 2900, t: 35.790 minutes, max|w| = 77.665 m/s
+[ Info: iter: 3000, t: 37.024 minutes, max|w| = 76.238 m/s
+[ Info: iter: 3100, t: 38.258 minutes, max|w| = 58.505 m/s
+[ Info: iter: 3200, t: 39.492 minutes, max|w| = 59.986 m/s
+[ Info: iter: 3300, t: 40.726 minutes, max|w| = 69.733 m/s
+[ Info: iter: 3400, t: 41.961 minutes, max|w| = 70.476 m/s
+[ Info: iter: 3500, t: 43.195 minutes, max|w| = 63.728 m/s
+[ Info: iter: 3600, t: 44.429 minutes, max|w| = 55.392 m/s
+[ Info: iter: 3700, t: 45.663 minutes, max|w| = 51.838 m/s
+[ Info: iter: 3800, t: 46.897 minutes, max|w| = 56.953 m/s
+[ Info: iter: 3900, t: 48.131 minutes, max|w| = 60.667 m/s
+[ Info: iter: 4000, t: 49.365 minutes, max|w| = 53.635 m/s
+[ Info: iter: 4100, t: 50.600 minutes, max|w| = 47.183 m/s
+[ Info: iter: 4200, t: 51.834 minutes, max|w| = 43.894 m/s
+[ Info: iter: 4300, t: 53.068 minutes, max|w| = 47.849 m/s
+[ Info: iter: 4400, t: 54.302 minutes, max|w| = 49.235 m/s
+[ Info: iter: 4500, t: 55.536 minutes, max|w| = 52.188 m/s
+[ Info: iter: 4600, t: 56.770 minutes, max|w| = 54.803 m/s
+[ Info: iter: 4700, t: 58.004 minutes, max|w| = 45.816 m/s
+[ Info: iter: 4800, t: 59.238 minutes, max|w| = 41.380 m/s
+[ Info: iter: 4900, t: 1.008 hours, max|w| = 50.249 m/s
+[ Info: iter: 5000, t: 1.028 hours, max|w| = 49.021 m/s
+[ Info: iter: 5100, t: 1.049 hours, max|w| = 40.119 m/s
+[ Info: iter: 5200, t: 1.070 hours, max|w| = 37.681 m/s
+[ Info: iter: 5300, t: 1.090 hours, max|w| = 48.516 m/s
+[ Info: iter: 5400, t: 1.111 hours, max|w| = 50.829 m/s
+[ Info: iter: 5500, t: 1.131 hours, max|w| = 44.469 m/s
+[ Info: iter: 5600, t: 1.152 hours, max|w| = 35.809 m/s
+[ Info: iter: 5700, t: 1.172 hours, max|w| = 37.622 m/s
+[ Info: iter: 5800, t: 1.193 hours, max|w| = 43.567 m/s
+[ Info: iter: 5900, t: 1.214 hours, max|w| = 39.154 m/s
+[ Info: iter: 6000, t: 1.234 hours, max|w| = 44.140 m/s
+[ Info: iter: 6100, t: 1.255 hours, max|w| = 48.089 m/s
+[ Info: iter: 6200, t: 1.275 hours, max|w| = 50.518 m/s
+[ Info: iter: 6300, t: 1.296 hours, max|w| = 51.513 m/s
+[ Info: iter: 6400, t: 1.316 hours, max|w| = 47.667 m/s
+[ Info: iter: 6500, t: 1.337 hours, max|w| = 38.882 m/s
+[ Info: iter: 6600, t: 1.358 hours, max|w| = 46.237 m/s
+[ Info: iter: 6700, t: 1.378 hours, max|w| = 41.601 m/s
+[ Info: iter: 6800, t: 1.399 hours, max|w| = 41.315 m/s
+[ Info: iter: 6900, t: 1.419 hours, max|w| = 47.012 m/s
+[ Info: iter: 7000, t: 1.440 hours, max|w| = 42.288 m/s
+[ Info: iter: 7100, t: 1.460 hours, max|w| = 43.188 m/s
+[ Info: iter: 7200, t: 1.481 hours, max|w| = 43.347 m/s
+[ Info: iter: 7300, t: 1.502 hours, max|w| = 39.622 m/s
+[ Info: iter: 7400, t: 1.522 hours, max|w| = 46.200 m/s
+[ Info: iter: 7500, t: 1.543 hours, max|w| = 49.999 m/s
+[ Info: iter: 7600, t: 1.563 hours, max|w| = 53.959 m/s
+[ Info: iter: 7700, t: 1.584 hours, max|w| = 54.672 m/s
+[ Info: iter: 7800, t: 1.604 hours, max|w| = 54.485 m/s
+[ Info: iter: 7900, t: 1.625 hours, max|w| = 53.363 m/s
+[ Info: Simulation is stopping after running for 7.552 minutes.
+[ Info: Simulation time 1.646 hours equals or exceeds stop time 1.646 hours.
+[ Info: iter: 8000, t: 1.646 hours, max|w| = 50.250 m/s
+</code></pre><p>Let&#39;s plot w</p><pre><code class="language-julia hljs">heatmap(model.velocities.w)</code></pre><p><img src="../moist_internal_wave-21.svg" alt/></p><p>@info &quot;Simulation complete&quot;</p><h1 id="-Diagnostics:-observed-vs-predicted-buoyancy-frequency"><a class="docs-heading-anchor" href="###-Diagnostics:-observed-vs-predicted-buoyancy-frequency">## Diagnostics: observed vs predicted buoyancy frequency</a><a id="-Diagnostics:-observed-vs-predicted-buoyancy-frequency-1"></a><a class="docs-heading-anchor-permalink" href="###-Diagnostics:-observed-vs-predicted-buoyancy-frequency" title="Permalink"></a></h1><p>w<em>series = FieldTimeSeries(filename, &quot;w&quot;) θ</em>series = FieldTimeSeries(filename, &quot;θ&quot;) q_series = FieldTimeSeries(filename, &quot;qᵗ&quot;)</p><p>times = w<em>series.times Nt = length(times) i</em>mid = Nx ÷ 2 k_mid = Nz ÷ 2</p><p>@allowscalar begin     w<em>signal = [w</em>series[i<em>mid, 1, k</em>mid, n] for n in 1:Nt] end</p><p>function dominant_frequency(times, signal)     demeaned = signal .- mean(signal)     dt = mean(diff(times))     spectrum = abs.(rfft(demeaned))     freqs = (0:length(spectrum)-1) ./ (dt * length(signal))     idx = argmax(spectrum[2:end]) + 1       # skip zero frequency     return 2π * freqs[idx] end</p><p>ω<em>observed = dominant</em>frequency(times, w<em>signal) period</em>observed = 2π / ω_observed</p><p>@info &quot;Wave frequencies&quot; ω<em>dry ω</em>moist ω_observed</p><h1 id="-Visualization"><a class="docs-heading-anchor" href="###-Visualization">## Visualization</a><a id="-Visualization-1"></a><a class="docs-heading-anchor-permalink" href="###-Visualization" title="Permalink"></a></h1><p>x = range(grid.x[1], grid.x[2]; length = Nx) z = range(grid.z[1], grid.z[2]; length = Nz) time_minutes = times ./ 60</p><p>w<em>snapshot = Array(permutedims(w</em>series[:, 1, :, end])) w<em>amplitude = maximum(abs, w</em>signal)</p><p>dry<em>fit = w</em>amplitude * sin.(ω<em>dry .* (times .- times[1])) moist</em>fit = w<em>amplitude * sin.(ω</em>moist .* (times .- times[1]))</p><p>fig = Figure(size = (900, 950), fontsize = 14)</p><p>ax<em>field = Axis(fig[1, 1]; xlabel = &quot;x (km)&quot;, ylabel = &quot;z (km)&quot;,                 title = &quot;Vertical velocity w at t = prettytime(times[end])&quot;) hm = heatmap!(ax</em>field, x ./ 1<em>000, z ./ 1</em>000, w<em>snapshot;               colormap = :balance, colorrange = (-w</em>amplitude, w_amplitude)) Colorbar(fig[1, 2], hm, label = &quot;w (m s⁻¹)&quot;)</p><p>ax<em>ts = Axis(fig[2, 1]; xlabel = &quot;time (min)&quot;, ylabel = &quot;w (m s⁻¹)&quot;,              title = &quot;Oscillation at domain center&quot;) lines!(ax</em>ts, time<em>minutes, w</em>signal; label = &quot;simulation&quot;, color = :black) lines!(ax<em>ts, time</em>minutes, dry<em>fit; label = &quot;dry N&quot;, color = :royalblue, linestyle = :dash) lines!(ax</em>ts, time<em>minutes, moist</em>fit; label = &quot;saturated N&quot;, color = :firebrick, linestyle = :dot) axislegend(ax_ts; position = :rt)</p><p>ax<em>freq = Axis(fig[3, 1]; xlabel = &quot;&quot;, ylabel = &quot;ω (s⁻¹)&quot;,                title = &quot;Dominant frequency comparison&quot;,                xticks = (1:3, [&quot;observed&quot;, &quot;dry&quot;, &quot;saturated&quot;])) barplot!(ax</em>freq, 1:3, [ω<em>observed, ω</em>dry, ω_moist];          color = (:gray50, :royalblue, :firebrick))</p><p>fig</p><h2 id="Optional-animation"><a class="docs-heading-anchor" href="#Optional-animation">Optional animation</a><a id="Optional-animation-1"></a><a class="docs-heading-anchor-permalink" href="#Optional-animation" title="Permalink"></a></h2><p>Uncomment the block below to record an MP4 movie of the packet. using Printf n = Observable(1) w<em>lim = maximum(abs, w</em>series) fig<em>anim = Figure(size = (700, 500)) ax</em>anim = Axis(fig<em>anim[1, 1]; xlabel = &quot;x (km)&quot;, ylabel = &quot;z (km)&quot;,                title = &quot;Saturated internal wave packet&quot;) hm</em>anim = heatmap!(ax<em>anim, x ./ 1</em>000, z ./ 1<em>000,                    permutedims(w</em>series[:, 1, :, 1]);                    colormap = :balance,                    colorrange = (-w<em>lim, w</em>lim)) title<em>obs = @lift &quot;t = <span>$(prettytime(times[$</span>n]))&quot; fig</em>anim[0, :] = Label(fig<em>anim, title</em>obs, fontsize = 18, tellwidth = false)</p><p>record(fig<em>anim, &quot;moist</em>internal<em>wave.mp4&quot;, 1:Nt, framerate = 12) do nn     hm</em>anim[1] = permutedims(w<em>series[:, 1, :, nn])     n[] = nn end @info &quot;Animation saved to moist</em>internal_wave.mp4&quot;</p><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../cloudy_kelvin_helmholtz/">« Cloudy Kelvin-Helmholtz instability</a><a class="docs-footer-nextpage" href="../../thermodynamics/">Thermodynamics »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.16.1 on <span class="colophon-date" title="Tuesday 25 November 2025 02:29">Tuesday 25 November 2025</span>. Using Julia version 1.12.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
