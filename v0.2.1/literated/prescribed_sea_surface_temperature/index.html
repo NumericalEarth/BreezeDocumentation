@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Convection over prescribed sea surface temperature (SST) · Breeze</title><meta name="title" content="Convection over prescribed sea surface temperature (SST) · Breeze"/><meta property="og:title" content="Convection over prescribed sea surface temperature (SST) · Breeze"/><meta property="twitter:title" content="Convection over prescribed sea surface temperature (SST) · Breeze"/><meta name="description" content="Documentation for Breeze."/><meta property="og:description" content="Documentation for Breeze."/><meta property="twitter:description" content="Documentation for Breeze."/><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../search_index.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">Breeze</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><span class="tocitem">Examples</span><ul><li><a class="tocitem" href="../dry_thermal_bubble/">Stratified dry thermal bubble</a></li><li><a class="tocitem" href="../cloudy_thermal_bubble/">Cloudy thermal bubble</a></li><li><a class="tocitem" href="../cloudy_kelvin_helmholtz/">Cloudy Kelvin-Helmholtz instability</a></li><li><a class="tocitem" href="../bomex/">Shallow cumulus convection (BOMEX)</a></li><li><a class="tocitem" href="../rico/">Precipitating shallow cumulus (RICO)</a></li><li class="is-active"><a class="tocitem" href>Convection over prescribed sea surface temperature (SST)</a><ul class="internal"><li><a class="tocitem" href="#Grid-setup"><span>Grid setup</span></a></li><li><a class="tocitem" href="#Model-formulation"><span>Model formulation</span></a></li><li><a class="tocitem" href="#Boundary-conditions"><span>Boundary conditions</span></a></li><li><a class="tocitem" href="#Sensible-heat-flux-and-vapor-fluxes"><span>Sensible heat flux and vapor fluxes</span></a></li><li><a class="tocitem" href="#Model-construction"><span>Model construction</span></a></li><li><a class="tocitem" href="#Initial-conditions"><span>Initial conditions</span></a></li><li><a class="tocitem" href="#Simulation-setup"><span>Simulation setup</span></a></li><li><a class="tocitem" href="#Diagnostic-fields"><span>Diagnostic fields</span></a></li><li><a class="tocitem" href="#Surface-flux-diagnostics"><span>Surface flux diagnostics</span></a></li><li><a class="tocitem" href="#Progress-callback"><span>Progress callback</span></a></li><li><a class="tocitem" href="#Output"><span>Output</span></a></li><li><a class="tocitem" href="#Run-the-simulation"><span>Run the simulation</span></a></li><li><a class="tocitem" href="#Visualization"><span>Visualization</span></a></li></ul></li><li><a class="tocitem" href="../inertia_gravity_wave/">Inertia gravity wave</a></li><li><a class="tocitem" href="../single_column_radiation/">Single column gray radiation</a></li><li><a class="tocitem" href="../stationary_parcel_model/">Stationary parcel model</a></li></ul></li><li><a class="tocitem" href="../../thermodynamics/">Thermodynamics</a></li><li><span class="tocitem">AtmosphereModel</span><ul><li><a class="tocitem" href="../../atmosphere_model/diagnostics/">Diagnostics</a></li></ul></li><li><span class="tocitem">Microphysics</span><ul><li><a class="tocitem" href="../../microphysics/microphysics_overview/">Overview</a></li><li><a class="tocitem" href="../../microphysics/warm_phase_saturation_adjustment/">Warm-phase saturation adjustment</a></li><li><a class="tocitem" href="../../microphysics/mixed_phase_saturation_adjustment/">Mixed-phase saturation adjustment</a></li></ul></li><li><span class="tocitem">Developers</span><ul><li><input class="collapse-toggle" id="menuitem-6-1" type="checkbox"/><label class="tocitem" for="menuitem-6-1"><span class="docs-label">Microphysics</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../developer/microphysics_interface/">Microphysics Interface</a></li></ul></li></ul></li><li><a class="tocitem" href="../../radiative_transfer/">Radiative Transfer</a></li><li><a class="tocitem" href="../../dycore_equations_algorithms/">Dycore equations and algorithms</a></li><li><span class="tocitem">Appendix</span><ul><li><a class="tocitem" href="../../appendix/notation/">Notation</a></li></ul></li><li><a class="tocitem" href="../../references/">References</a></li><li><a class="tocitem" href="../../api/">API</a></li><li><a class="tocitem" href="../../contributing/">Contributors guide</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Examples</a></li><li class="is-active"><a href>Convection over prescribed sea surface temperature (SST)</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Convection over prescribed sea surface temperature (SST)</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/NumericalEarth/Breeze.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/NumericalEarth/Breeze.jl/blob/main/examples/prescribed_sea_surface_temperature.jl" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Prescribed-sea-surface-temperature-convection"><a class="docs-heading-anchor" href="#Prescribed-sea-surface-temperature-convection">Prescribed sea surface temperature convection</a><a id="Prescribed-sea-surface-temperature-convection-1"></a><a class="docs-heading-anchor-permalink" href="#Prescribed-sea-surface-temperature-convection" title="Permalink"></a></h1><p>This example simulates moist convection driven by a prescribed sea surface temperature (SST). The simulation models the atmospheric response to a horizontally-varying SST pattern, a fundamental problem in atmosphere-ocean interaction studies. The setup is representative of convection over oceanic fronts or sea surface temperature gradients, where differential heating drives organized atmospheric circulations.</p><p>The simulation uses bulk aerodynamic formulas to compute surface fluxes of momentum, sensible heat, and latent heat based on bulk transfer coefficients. This approach parameterizes the complex turbulent exchange processes in the surface layer using simple drag law formulations that relate fluxes to the difference between surface and near-surface atmospheric properties.</p><p>The model uses warm-phase saturation adjustment microphysics with liquid-ice potential temperature thermodynamics. Saturation adjustment instantly condenses or evaporates water vapor to maintain thermodynamic equilibrium, providing a simple yet effective representation of cloud processes in moist convection.</p><pre><code class="language-julia hljs">using Breeze
+using Oceananigans
+using Oceananigans.Units
+using Oceananigans.Models: BoundaryConditionOperation
+using Printf
+using CairoMakie</code></pre><h2 id="Grid-setup"><a class="docs-heading-anchor" href="#Grid-setup">Grid setup</a><a id="Grid-setup-1"></a><a class="docs-heading-anchor-permalink" href="#Grid-setup" title="Permalink"></a></h2><p>We use a 2D domain (x-z plane) with periodic horizontal boundaries and a bounded vertical domain. The horizontal periodicity allows convective cells to develop and interact without artificial boundary effects. The domain extends 20 km horizontally and 10 km vertically.</p><p>The grid resolution of 128 points in each direction provides approximately 156 m horizontal and 78 m vertical resolution, sufficient to resolve the energy-containing scales of convective turbulence while remaining computationally tractable for this demonstration.</p><pre><code class="language-julia hljs">grid = RectilinearGrid(size = (128, 128), halo = (5, 5),
+                       x = (-10kilometers, 10kilometers),
+                       z = (0, 10kilometers),
+                       topology = (Periodic, Flat, Bounded))</code></pre><pre><code class="nohighlight hljs">128×1×128 RectilinearGrid{Float64, Oceananigans.Grids.Periodic, Oceananigans.Grids.Flat, Oceananigans.Grids.Bounded} on Oceananigans.Architectures.CPU with 5×0×5 halo
+├── Periodic x ∈ [-10000.0, 10000.0) regularly spaced with Δx=156.25
+├── Flat y                           
+└── Bounded  z ∈ [0.0, 10000.0]      regularly spaced with Δz=78.125</code></pre><h2 id="Model-formulation"><a class="docs-heading-anchor" href="#Model-formulation">Model formulation</a><a id="Model-formulation-1"></a><a class="docs-heading-anchor-permalink" href="#Model-formulation" title="Permalink"></a></h2><p>We create an AtmosphereModel with warm-phase saturation adjustment microphysics and liquid-ice potential temperature thermodynamics. The anelastic formulation filters acoustic waves while retaining the essential dynamics of deep convection, allowing larger time steps than a fully compressible model.</p><p>The reference state defines the background thermodynamic profile against which perturbations evolve. We use a base pressure p₀ = 101325 Pa (standard sea level pressure) and reference potential temperature θ₀ = 285 K, representing a relatively cool maritime atmosphere.</p><pre><code class="language-julia hljs">p₀, θ₀ = 101325, 285 # Pa, K
+constants = ThermodynamicConstants()
+reference_state = ReferenceState(grid, constants; surface_pressure=p₀, potential_temperature=θ₀)
+dynamics = AnelasticDynamics(reference_state)</code></pre><pre><code class="nohighlight hljs">AnelasticDynamics(p₀=101325.0, θ₀=285.0)
+└── pressure_anomaly: not materialized</code></pre><p>The microphysics scheme uses saturation adjustment to maintain thermodynamic equilibrium. The <code>WarmPhaseEquilibrium</code> option considers only liquid water and vapor, appropriate for warm convection where ice processes are negligible.</p><pre><code class="language-julia hljs">microphysics = SaturationAdjustment(equilibrium = WarmPhaseEquilibrium())</code></pre><pre><code class="nohighlight hljs">Breeze.Microphysics.SaturationAdjustment{Breeze.Microphysics.WarmPhaseEquilibrium, Float64}(0.001, Inf, Breeze.Microphysics.WarmPhaseEquilibrium())</code></pre><p>We use high-order WENO advection schemes to accurately represent the sharp gradients that develop in convective flows. WENO (Weighted Essentially Non-Oscillatory; <a href="../../references/#Shu09">Shu (2009)</a>) schemes provide excellent shock-capturing properties while maintaining high accuracy in smooth regions.</p><pre><code class="language-julia hljs">momentum_advection = WENO(order=9)
+scalar_advection = WENO(order=5)</code></pre><pre><code class="nohighlight hljs">WENO{3, Float64, Float32}(order=5)
+├── buffer_scheme: WENO{2, Float64, Float32}(order=3)
+│   └── buffer_scheme: Centered(order=2)
+└── advecting_velocity_scheme: Centered(order=4)</code></pre><h2 id="Boundary-conditions"><a class="docs-heading-anchor" href="#Boundary-conditions">Boundary conditions</a><a id="Boundary-conditions-1"></a><a class="docs-heading-anchor-permalink" href="#Boundary-conditions" title="Permalink"></a></h2><p>Breeze provides abstractions for specifying bulk surface fluxes. The <code>BulkDrag</code>, <code>BulkSensibleHeatFlux</code>, and <code>BulkVaporFlux</code> boundary conditions compute fluxes of momentum, temperature density (proportional to sensible heat flux), and moisture density according to bulk aerodynamic formulae that relate turbulent fluxes to the difference between atmosphere properties, surface properties, and the differential motion of the air and surface,</p><p class="math-container">\[τˣ = - Cᴰ |U| ρu, \quad Jᵀ = - ρ₀ Cᵀ |U| (θ - θ₀), \quad Jᵛ = - ρ₀ Cᵛ |U| (qᵗ - qᵛ₀),\]</p><p>where <span>$|U|$</span> is &quot;total&quot; the differential wind speed (including gustiness), <span>$Cᴰ, Cᵀ, Cᵛ$</span> are transfer coefficients, and <span>$θ₀, qᵛ₀$</span> are the surface temperature and surface specific humidity, which for wet surfaces is presumed to be the saturation specific humidity over a planar liquid surface computed at the surface temperature. <span>$τˣ$</span> is the surface momentum flux, <span>$Jᵀ$</span> is the surface temperature density flux, and <span>$Jᵛ$</span> is the surface moisture density flux. The surface density density <span>$ρ₀$</span> is computed from the model&#39;s reference state.</p><p>The temperature density flux is proportional to the sensible heat flux,</p><p class="math-container">\[𝒬ᵀ = - ρ₀ cᵖᵐ Cᵀ |U| (θ - θ₀) .\]</p><p>where <span>$cᵖᵐ$</span> is the mixture heat capacity.</p><p>We start by defining the drag coefficient and gustiness parameter,</p><pre><code class="language-julia hljs">Cᴰ = 1e-3  # Drag coefficient
+Uᵍ = 1e-2  # Minimum wind speed (m/s)
+
+ρu_surface_flux = ρv_surface_flux = BulkDrag(coefficient=Cᴰ, gustiness=Uᵍ)</code></pre><pre><code class="nohighlight hljs">FluxBoundaryCondition: BulkDragFunction(direction=Nothing, coefficient=0.001, gustiness=0.01)</code></pre><h2 id="Sensible-heat-flux-and-vapor-fluxes"><a class="docs-heading-anchor" href="#Sensible-heat-flux-and-vapor-fluxes">Sensible heat flux and vapor fluxes</a><a id="Sensible-heat-flux-and-vapor-fluxes-1"></a><a class="docs-heading-anchor-permalink" href="#Sensible-heat-flux-and-vapor-fluxes" title="Permalink"></a></h2><p>For <code>BulkVaporFlux</code>, the saturation specific humidity is computed from the surface temperature. Surface temperature can be provided as a <code>Field</code>, a <code>Function</code>, or a <code>Number</code>.</p><p>In this example, we specify the sea surface temperature as a top hat function i.e. representing a pair of ocean fronts in a periodic domain, with a difference of 4 degrees K,</p><pre><code class="language-julia hljs">ΔT = 4 # K
+T₀(x) = θ₀ + ΔT / 2 * sign(cos(2π * x / grid.Lx))</code></pre><pre><code class="nohighlight hljs">T₀ (generic function with 1 method)</code></pre><p>We complete our specification with the sensible heat transfer coefficient and vapor transfer coefficient,</p><pre><code class="language-julia hljs">Cᵀ = 1e-3  # Sensible heat transfer coefficient
+Cᵛ = 1e-3  # Vapor transfer coefficient</code></pre><pre><code class="nohighlight hljs">0.001</code></pre><p>and build the flux parameterizations</p><pre><code class="language-julia hljs">ρθ_surface_flux = BulkSensibleHeatFlux(coefficient=Cᵀ, gustiness=Uᵍ, surface_temperature=T₀)
+ρqᵗ_surface_flux = BulkVaporFlux(coefficient=Cᵛ, gustiness=Uᵍ, surface_temperature=T₀)</code></pre><pre><code class="nohighlight hljs">FluxBoundaryCondition: BulkVaporFluxFunction(coefficient=0.001, gustiness=0.01)</code></pre><p>We finally assemble all of the boundary conditions,</p><pre><code class="language-julia hljs">ρu_bcs = FieldBoundaryConditions(bottom=ρu_surface_flux)
+ρv_bcs = FieldBoundaryConditions(bottom=ρv_surface_flux)
+ρθ_bcs = FieldBoundaryConditions(bottom=ρθ_surface_flux)
+ρqᵗ_bcs = FieldBoundaryConditions(bottom=ρqᵗ_surface_flux)</code></pre><pre><code class="nohighlight hljs">Oceananigans.FieldBoundaryConditions, with boundary conditions
+├── west: DefaultBoundaryCondition (FluxBoundaryCondition: Nothing)
+├── east: DefaultBoundaryCondition (FluxBoundaryCondition: Nothing)
+├── south: DefaultBoundaryCondition (FluxBoundaryCondition: Nothing)
+├── north: DefaultBoundaryCondition (FluxBoundaryCondition: Nothing)
+├── bottom: FluxBoundaryCondition: BulkVaporFluxFunction(coefficient=0.001, gustiness=0.01)
+├── top: DefaultBoundaryCondition (FluxBoundaryCondition: Nothing)
+└── immersed: DefaultBoundaryCondition (FluxBoundaryCondition: Nothing)</code></pre><h2 id="Model-construction"><a class="docs-heading-anchor" href="#Model-construction">Model construction</a><a id="Model-construction-1"></a><a class="docs-heading-anchor-permalink" href="#Model-construction" title="Permalink"></a></h2><p>We assemble the AtmosphereModel with all the components defined above. The model will solve the anelastic equations with the specified advection schemes, microphysics, and boundary conditions.</p><pre><code class="language-julia hljs">model = AtmosphereModel(grid; momentum_advection, scalar_advection, microphysics, dynamics,
+                        boundary_conditions = (ρu=ρu_bcs, ρv=ρv_bcs, ρθ=ρθ_bcs, ρqᵗ=ρqᵗ_bcs))</code></pre><pre><code class="nohighlight hljs">AtmosphereModel{CPU, RectilinearGrid}(time = 0 seconds, iteration = 0)
+├── grid: 128×1×128 RectilinearGrid{Float64, Oceananigans.Grids.Periodic, Oceananigans.Grids.Flat, Oceananigans.Grids.Bounded} on Oceananigans.Architectures.CPU with 5×0×5 halo
+├── dynamics: AnelasticDynamics(p₀=101325.0, θ₀=285.0)
+├── formulation: LiquidIcePotentialTemperatureFormulation
+├── timestepper: RungeKutta3TimeStepper
+├── advection scheme: 
+│   ├── momentum: WENO{5, Float64, Float32}(order=9)
+│   ├── ρθ: WENO{3, Float64, Float32}(order=5)
+│   └── ρqᵗ: WENO{3, Float64, Float32}(order=5)
+├── tracers: ()
+├── coriolis: Nothing
+└── microphysics: SaturationAdjustment</code></pre><h2 id="Initial-conditions"><a class="docs-heading-anchor" href="#Initial-conditions">Initial conditions</a><a id="Initial-conditions-1"></a><a class="docs-heading-anchor-permalink" href="#Initial-conditions" title="Permalink"></a></h2><p>We initialize the model with a uniform potential temperature equal to the reference value, creating a neutrally stratified atmosphere. A small background wind (1 m/s) in the x-direction provides initial momentum for the bulk flux calculations and helps break symmetry.</p><pre><code class="language-julia hljs">set!(model, θ=reference_state.potential_temperature, u=1)</code></pre><h2 id="Simulation-setup"><a class="docs-heading-anchor" href="#Simulation-setup">Simulation setup</a><a id="Simulation-setup-1"></a><a class="docs-heading-anchor-permalink" href="#Simulation-setup" title="Permalink"></a></h2><p>We configure the simulation to run for 4 hours with adaptive time stepping. The CFL condition limits the time step to maintain numerical stability, with a target CFL number of 0.7 providing a good balance between efficiency and accuracy.</p><pre><code class="language-julia hljs">simulation = Simulation(model, Δt=10, stop_time=4hours)
+conjure_time_step_wizard!(simulation, cfl=0.7)</code></pre><h2 id="Diagnostic-fields"><a class="docs-heading-anchor" href="#Diagnostic-fields">Diagnostic fields</a><a id="Diagnostic-fields-1"></a><a class="docs-heading-anchor-permalink" href="#Diagnostic-fields" title="Permalink"></a></h2><p>We define several diagnostic quantities for analysis and visualization:</p><ul><li>Temperature T: the actual temperature field</li><li>Potential temperature θ: conserved in dry adiabatic processes</li><li>Liquid water content qˡ: mass fraction of cloud liquid water</li><li>Saturation specific humidity qᵛ⁺: maximum water vapor the air can hold</li></ul><pre><code class="language-julia hljs">T = model.temperature
+θ = liquid_ice_potential_temperature(model)
+qˡ = model.microphysical_fields.qˡ
+qᵛ⁺ = Breeze.Microphysics.SaturationSpecificHumidity(model)
+
+ρu, ρv, ρw = model.momentum
+u, v, w = model.velocities
+qᵗ = model.specific_moisture</code></pre><pre><code class="nohighlight hljs">128×1×128 Field{Oceananigans.Grids.Center, Oceananigans.Grids.Center, Oceananigans.Grids.Center} on Oceananigans.Grids.RectilinearGrid on Oceananigans.Architectures.CPU
+├── grid: 128×1×128 RectilinearGrid{Float64, Oceananigans.Grids.Periodic, Oceananigans.Grids.Flat, Oceananigans.Grids.Bounded} on Oceananigans.Architectures.CPU with 5×0×5 halo
+├── boundary conditions: FieldBoundaryConditions
+│   └── west: Periodic, east: Periodic, south: Nothing, north: Nothing, bottom: ZeroFlux, top: ZeroFlux, immersed: Nothing
+└── data: 138×1×138 OffsetArray(::Array{Float64, 3}, -4:133, 1:1, -4:133) with eltype Float64 with indices -4:133×1:1×-4:133
+    └── max=0.0, min=0.0, mean=0.0</code></pre><h2 id="Surface-flux-diagnostics"><a class="docs-heading-anchor" href="#Surface-flux-diagnostics">Surface flux diagnostics</a><a id="Surface-flux-diagnostics-1"></a><a class="docs-heading-anchor-permalink" href="#Surface-flux-diagnostics" title="Permalink"></a></h2><p>We use Oceananigans&#39; <code>BoundaryConditionOperation</code> to extract the surface flux values from the boundary conditions. These 1D fields (varying only in x) represent the actual flux values applied at the ocean-atmosphere interface.</p><p>The surface fluxes are:</p><ul><li><span>$τˣ$</span>: momentum flux (stress), in kg m⁻¹ s⁻²</li><li><span>$𝒬ᵀ$</span>: sensible heat flux = cᵖᵐ Jᵀ, in W m⁻²</li><li><span>$𝒬ᵛ$</span>: latent heat flux = ℒˡ Jᵛ, in W m⁻²</li></ul><p>where Jᵀ is the temperature density flux and Jᵛ is the moisture density flux.</p><pre><code class="language-julia hljs"># Surface momentum flux
+τˣ = BoundaryConditionOperation(ρu, :bottom, model)
+
+# Sensible heat flux: 𝒬ᵀ = cᵖᵈ Jᵀ (using dry air heat capacity as approximation)
+ρθ = liquid_ice_potential_temperature_density(model)
+cᵖᵈ = constants.dry_air.heat_capacity
+Jᵀ = BoundaryConditionOperation(ρθ, :bottom, model)
+𝒬ᵀ = cᵖᵈ * Jᵀ
+
+# Latent heat flux: 𝒬ᵛ = ℒˡ Jᵛ (using reference θ₀ for latent heat)
+ρqᵗ = model.moisture_density
+ℒˡ = Breeze.Thermodynamics.liquid_latent_heat(θ₀, constants)
+Jᵛ = BoundaryConditionOperation(ρqᵗ, :bottom, model)
+𝒬ᵛ = ℒˡ * Jᵛ</code></pre><pre><code class="nohighlight hljs">BinaryOperation at (Center, Center, ⋅)
+├── grid: 128×1×128 RectilinearGrid{Float64, Oceananigans.Grids.Periodic, Oceananigans.Grids.Flat, Oceananigans.Grids.Bounded} on Oceananigans.Architectures.CPU with 5×0×5 halo
+└── tree: 
+    * at (Center, Center, ⋅)
+    ├── 2.47317765e6
+    └── KernelFunctionOperation at (Center, Center, ⋅)</code></pre><h2 id="Progress-callback"><a class="docs-heading-anchor" href="#Progress-callback">Progress callback</a><a id="Progress-callback-1"></a><a class="docs-heading-anchor-permalink" href="#Progress-callback" title="Permalink"></a></h2><p>A callback function prints diagnostic information every few iterations, helping monitor the simulation&#39;s progress and detect any numerical issues.</p><pre><code class="language-julia hljs">function progress(sim)
+    qᵗ = sim.model.specific_moisture
+    u, v, w = sim.model.velocities
+
+    umax = maximum(abs, u)
+    vmax = maximum(abs, v)
+    wmax = maximum(abs, w)
+
+    qᵗmin = minimum(qᵗ)
+    qᵗmax = maximum(qᵗ)
+    qˡmax = maximum(qˡ)
+
+    θmin = minimum(θ)
+    θmax = maximum(θ)
+
+    msg = @sprintf(&quot;Iter: %d, t = %s, max|u|: (%.2e, %.2e, %.2e)&quot;,
+                    iteration(sim), prettytime(sim), umax, vmax, wmax)
+
+    msg *= @sprintf(&quot;, extrema(qᵗ): (%.2e, %.2e), max(qˡ): %.2e, extrema(θ): (%.2e, %.2e)&quot;,
+                     qᵗmin, qᵗmax, qˡmax, θmin, θmax)
+
+    @info msg
+
+    return nothing
+end
+
+add_callback!(simulation, progress, IterationInterval(100))</code></pre><h2 id="Output"><a class="docs-heading-anchor" href="#Output">Output</a><a id="Output-1"></a><a class="docs-heading-anchor-permalink" href="#Output" title="Permalink"></a></h2><p>We save both the full 2D fields and the 1D surface flux fields. We include both native model variables and others like, e.g., the total speed, <span>$\sqrt{u² + w²}$</span> and the cross-stream vorticity <span>$∂_z u - ∂_x w$</span>. The JLD2 format provides efficient storage with full Julia type preservation.</p><pre><code class="language-julia hljs">output_filename = &quot;prescribed_sea_surface_temperature_convection.jld2&quot;
+qᵗ = model.specific_moisture
+u, v, w, = model.velocities
+s = sqrt(u^2 + w^2) # speed
+ξ = ∂z(u) - ∂x(w)   # cross-stream vorticity
+outputs = (; s, ξ, T, θ, qˡ, qᵛ⁺, qᵗ, τˣ, 𝒬ᵀ, 𝒬ᵛ, Σ𝒬=𝒬ᵀ+𝒬ᵛ)
+
+ow = JLD2Writer(model, outputs;
+                filename = output_filename,
+                schedule = TimeInterval(2minutes),
+                overwrite_existing = true)
+
+simulation.output_writers[:jld2] = ow</code></pre><pre><code class="nohighlight hljs">JLD2Writer scheduled on TimeInterval(2 minutes):
+├── filepath: prescribed_sea_surface_temperature_convection.jld2
+├── 11 outputs: (s, ξ, T, θ, qˡ, qᵛ⁺, qᵗ, τˣ, 𝒬ᵀ, 𝒬ᵛ, Σ𝒬)
+├── array_type: Array{Float32}
+├── including: [:grid]
+├── file_splitting: NoFileSplitting
+└── file size: 70.7 KiB</code></pre><h2 id="Run-the-simulation"><a class="docs-heading-anchor" href="#Run-the-simulation">Run the simulation</a><a id="Run-the-simulation-1"></a><a class="docs-heading-anchor-permalink" href="#Run-the-simulation" title="Permalink"></a></h2><pre><code class="language-julia hljs">@info &quot;Running prescribed SST convection simulation...&quot;
+run!(simulation)</code></pre><pre><code class="nohighlight hljs">[ Info: Running prescribed SST convection simulation...
+[ Info: Initializing simulation...
+[ Info: Iter: 0, t = 0 seconds, max|u|: (1.00e+00, 0.00e+00, 0.00e+00), extrema(qᵗ): (0.00e+00, 0.00e+00), max(qˡ): 0.00e+00, extrema(θ): (2.85e+02, 2.85e+02)
+[ Info:     ... simulation initialization complete (32.014 seconds)
+[ Info: Executing initial time step...
+[ Info:     ... initial time step complete (6.527 seconds).
+[ Info: Iter: 100, t = 27.297 minutes, max|u|: (1.08e+00, 0.00e+00, 2.27e-02), extrema(qᵗ): (-6.72e-06, 2.13e-04), max(qˡ): 0.00e+00, extrema(θ): (2.85e+02, 2.85e+02)
+[ Info: Iter: 200, t = 1.433 hours, max|u|: (2.41e+00, 0.00e+00, 9.53e-01), extrema(qᵗ): (-1.52e-04, 7.20e-04), max(qˡ): 0.00e+00, extrema(θ): (2.85e+02, 2.85e+02)
+[ Info: Iter: 300, t = 2.158 hours, max|u|: (2.55e+00, 0.00e+00, 2.46e+00), extrema(qᵗ): (-2.81e-04, 1.01e-03), max(qˡ): 0.00e+00, extrema(θ): (2.85e+02, 2.85e+02)
+[ Info: Iter: 400, t = 2.700 hours, max|u|: (2.83e+00, 0.00e+00, 1.86e+00), extrema(qᵗ): (-2.38e-04, 1.09e-03), max(qˡ): 0.00e+00, extrema(θ): (2.85e+02, 2.85e+02)
+[ Info: Iter: 500, t = 3.221 hours, max|u|: (2.79e+00, 0.00e+00, 2.48e+00), extrema(qᵗ): (-2.73e-04, 1.22e-03), max(qˡ): 0.00e+00, extrema(θ): (2.85e+02, 2.85e+02)
+[ Info: Iter: 600, t = 3.744 hours, max|u|: (3.26e+00, 0.00e+00, 2.28e+00), extrema(qᵗ): (-3.76e-04, 1.32e-03), max(qˡ): 2.67e-06, extrema(θ): (2.85e+02, 2.85e+02)
+[ Info: Simulation is stopping after running for 1.360 minutes.
+[ Info: Simulation time 4 hours equals or exceeds stop time 4 hours.
+</code></pre><h2 id="Visualization"><a class="docs-heading-anchor" href="#Visualization">Visualization</a><a id="Visualization-1"></a><a class="docs-heading-anchor-permalink" href="#Visualization" title="Permalink"></a></h2><p>We create animations showing the evolution of the flow fields. The figure displays velocity components (u, w), thermodynamic fields (θ, T), moisture fields (qᵗ, qˡ), and surface fluxes (momentum and heat).</p><pre><code class="language-julia hljs">@assert isfile(output_filename) &quot;Output file $(output_filename) not found.&quot;
+
+s_ts = FieldTimeSeries(output_filename, &quot;s&quot;)
+ξ_ts = FieldTimeSeries(output_filename, &quot;ξ&quot;)
+θ_ts = FieldTimeSeries(output_filename, &quot;θ&quot;)
+T_ts = FieldTimeSeries(output_filename, &quot;T&quot;)
+qᵗ_ts = FieldTimeSeries(output_filename, &quot;qᵗ&quot;)
+qˡ_ts = FieldTimeSeries(output_filename, &quot;qˡ&quot;)
+τˣ_ts = FieldTimeSeries(output_filename, &quot;τˣ&quot;)
+𝒬ᵀ_ts = FieldTimeSeries(output_filename, &quot;𝒬ᵀ&quot;)
+𝒬ᵛ_ts = FieldTimeSeries(output_filename, &quot;𝒬ᵛ&quot;)
+Σ𝒬_ts = FieldTimeSeries(output_filename, &quot;Σ𝒬&quot;)
+
+times = θ_ts.times
+Nt = length(θ_ts)
+
+n = Observable(Nt)
+
+sn = @lift s_ts[$n]
+ξn = @lift ξ_ts[$n]
+θn = @lift θ_ts[$n]
+qᵗn = @lift qᵗ_ts[$n]
+Tn = @lift T_ts[$n]
+qˡn = @lift qˡ_ts[$n]
+τˣn = @lift τˣ_ts[$n]
+𝒬ᵀn = @lift 𝒬ᵀ_ts[$n]
+𝒬ᵛn = @lift 𝒬ᵛ_ts[$n]
+Σ𝒬n = @lift Σ𝒬_ts[$n]</code></pre><pre><code class="nohighlight hljs">Observable(128×1×1 Field{Oceananigans.Grids.Center, Oceananigans.Grids.Center, Nothing} reduced over dims = (3,) on Oceananigans.Grids.RectilinearGrid on Oceananigans.Architectures.CPU
+├── grid: 128×1×128 RectilinearGrid{Float64, Oceananigans.Grids.Periodic, Oceananigans.Grids.Flat, Oceananigans.Grids.Bounded} on Oceananigans.Architectures.CPU with 5×0×5 halo
+├── boundary conditions: FieldBoundaryConditions
+│   └── west: Periodic, east: Periodic, south: Nothing, north: Nothing, bottom: Nothing, top: Nothing, immersed: Nothing
+└── data: 138×1×1 OffsetArray(view(::Array{Float64, 4}, :, :, :, 121), -4:133, 1:1, 1:1) with eltype Float64 with indices -4:133×1:1×1:1
+    └── max=79.1307, min=0.349127, mean=29.3022)
+</code></pre><p>Now we are ready to plot.</p><pre><code class="language-julia hljs">fig = Figure(size=(800, 1000), fontsize=13)
+
+title = @lift &quot;t = $(prettytime(times[$n]))&quot;
+
+axs = Axis(fig[1, 1], ylabel=&quot;z (m)&quot;)
+axξ = Axis(fig[1, 2])
+axθ = Axis(fig[2, 1], ylabel=&quot;z (m)&quot;)
+axq = Axis(fig[2, 2])
+axT = Axis(fig[3, 1], ylabel=&quot;z (m)&quot;)
+axqˡ = Axis(fig[3, 2])</code></pre><pre><code class="nohighlight hljs">Axis with 0 plots:
+</code></pre><p>Surface flux plots at bottom</p><pre><code class="language-julia hljs">axτ = Axis(fig[4, 1], xlabel=&quot;x (m)&quot;, ylabel=&quot;τˣ (kg m⁻¹ s⁻²)&quot;, title=&quot;Surface momentum flux&quot;)
+ax𝒬 = Axis(fig[4, 2], xlabel=&quot;x (m)&quot;, ylabel=&quot;𝒬 (W m⁻²)&quot;, title=&quot;Surface heat flux (𝒬ᵀ + 𝒬ᵛ)&quot;)
+
+fig[0, :] = Label(fig, title, fontsize=22, tellwidth=false)</code></pre><pre><code class="nohighlight hljs">Label()</code></pre><p>Compute color limits from the full time series</p><pre><code class="language-julia hljs">θ_limits = extrema(θ_ts)
+T_limits = extrema(T_ts)
+s_limits = (0, maximum(s_ts))
+ξ_lim = 0.8 * maximum(abs, ξ_ts)
+ξ_limits = (-ξ_lim, +ξ_lim)
+
+qᵗ_max = maximum(qᵗ_ts)
+qˡ_max = maximum(qˡ_ts)</code></pre><pre><code class="nohighlight hljs">2.0498862795648165e-5</code></pre><p>Flux limits</p><pre><code class="language-julia hljs">τˣ_max = max(abs(minimum(τˣ_ts)), abs(maximum(τˣ_ts)))
+𝒬_min = min(minimum(𝒬ᵀ_ts), minimum(𝒬ᵛ_ts), minimum(Σ𝒬_ts))
+𝒬_max = max(maximum(𝒬ᵀ_ts), maximum(𝒬ᵛ_ts), maximum(Σ𝒬_ts))
+
+hms = heatmap!(axs, sn, colorrange=s_limits, colormap=:speed)
+hmξ = heatmap!(axξ, ξn, colorrange=ξ_limits, colormap=:balance)
+hmθ = heatmap!(axθ, θn, colorrange=θ_limits, colormap=:thermal)
+hmq = heatmap!(axq, qᵗn, colorrange=(0, qᵗ_max), colormap=Reverse(:Purples_4))
+hmT = heatmap!(axT, Tn, colorrange=T_limits)
+hmqˡ = heatmap!(axqˡ, qˡn, colorrange=(0, qˡ_max), colormap=Reverse(:Blues_4))</code></pre><pre><code class="nohighlight hljs">Heatmap{Tuple{Vector{Float64}, Vector{Float64}, Matrix{Float32}}}</code></pre><p>Plot the surface fluxes</p><pre><code class="language-julia hljs">lines!(axτ, τˣn, color=:black, linewidth=2)
+
+lines!(ax𝒬, 𝒬ᵀn, color=:firebrick, linewidth=2, label=&quot;sensible&quot;)
+lines!(ax𝒬, 𝒬ᵛn, color=:blue, linewidth=2, label=&quot;latent&quot;)
+lines!(ax𝒬, Σ𝒬n, color=:green, linewidth=4, label=&quot;total&quot;)
+Legend(fig[4, 3], ax𝒬)</code></pre><pre><code class="nohighlight hljs">Legend()</code></pre><p>Add zero lines, fix axis limits, and add colorbars.</p><pre><code class="language-julia hljs">for ax in (axτ, ax𝒬)
+    lines!(ax, [-grid.Lx/2, grid.Lx/2], [0, 0], color=:grey, linestyle=:dash)
+end
+
+for ax in (axs, axξ, axθ, axq, axT, axqˡ, axτ, ax𝒬)
+    xlims!(ax, -grid.Lx/2, grid.Lx/2)
+end
+
+ylims!(axτ, -τˣ_max, τˣ_max)
+ylims!(ax𝒬, 𝒬_min, 𝒬_max)
+
+Colorbar(fig[1, 0], hms, label=&quot;√(u² + w²) (m/s)&quot;, flipaxis=false)
+Colorbar(fig[1, 3], hmξ, label=&quot;∂u/∂z - ∂w/∂x (s⁻¹)&quot;)
+Colorbar(fig[2, 0], hmθ, label=&quot;θ (K)&quot;, flipaxis=false)
+Colorbar(fig[2, 3], hmq, label=&quot;qᵗ (kg/kg)&quot;)
+Colorbar(fig[3, 0], hmT, label=&quot;T (K)&quot;, flipaxis=false)
+Colorbar(fig[3, 3], hmqˡ, label=&quot;qˡ (kg/kg)&quot;)</code></pre><pre><code class="nohighlight hljs">Colorbar()</code></pre><p>Now we are ready to make a cool animation.</p><pre><code class="language-julia hljs">CairoMakie.record(fig, &quot;prescribed_sea_surface_temperature.mp4&quot;, 1:Nt, framerate=12) do nn
+    n[] = nn
+end</code></pre><p><video src="../prescribed_sea_surface_temperature.mp4" controls="true" title><a href="../prescribed_sea_surface_temperature.mp4"></a></video></p><hr/><h3 id="Julia-version-and-environment-information"><a class="docs-heading-anchor" href="#Julia-version-and-environment-information">Julia version and environment information</a><a id="Julia-version-and-environment-information-1"></a><a class="docs-heading-anchor-permalink" href="#Julia-version-and-environment-information" title="Permalink"></a></h3><p>This example was executed with the following version of Julia:</p><pre><code class="language-julia hljs">using InteractiveUtils: versioninfo
+versioninfo()</code></pre><pre><code class="nohighlight hljs">Julia Version 1.12.2
+Commit ca9b6662be4 (2025-11-20 16:25 UTC)
+Build Info:
+  Official https://julialang.org release
+Platform Info:
+  OS: Linux (x86_64-linux-gnu)
+  CPU: 8 × AMD EPYC 7R13 Processor
+  WORD_SIZE: 64
+  LLVM: libLLVM-18.1.7 (ORCJIT, znver3)
+  GC: Built with stock GC
+Threads: 1 default, 1 interactive, 1 GC (on 8 virtual cores)
+Environment:
+  JULIA_GPG = 3673DF529D9049477F76B37566E3C7DC03D6E495
+  JULIA_LOAD_PATH = :@breeze
+  JULIA_VERSION = 1.12.2
+  JULIA_DEPOT_PATH = /usr/local/share/julia:
+  JULIA_PATH = /usr/local/julia
+  JULIA_PROJECT = @breeze
+</code></pre><p>These were the top-level packages installed in the environment:</p><pre><code class="language-julia hljs">import Pkg
+Pkg.status()</code></pre><pre><code class="nohighlight hljs">Status `/__w/Breeze.jl/Breeze.jl/docs/Project.toml`
+  [86bc3604] AtmosphericProfilesLibrary v0.1.7
+  [660aa2fb] Breeze v0.2.1 `.`
+  [052768ef] CUDA v5.9.5
+  [13f3f980] CairoMakie v0.15.8
+  [6a9e3e04] CloudMicrophysics v0.29.1
+  [e30172f5] Documenter v1.16.1
+  [daee34ce] DocumenterCitations v1.4.1
+  [98b081ad] Literate v2.21.0
+⌅ [9e8cae18] Oceananigans v0.102.5
+  [a01a1ee8] RRTMGP v0.21.6
+  [b77e0a4c] InteractiveUtils v1.11.0
+  [44cfe95a] Pkg v1.12.0
+  [9a3f8284] Random v1.11.0
+Info Packages marked with ⌅ have new versions available but compatibility constraints restrict them from upgrading. To see why use `status --outdated`
+</code></pre><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../rico/">« Precipitating shallow cumulus (RICO)</a><a class="docs-footer-nextpage" href="../inertia_gravity_wave/">Inertia gravity wave »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.16.1 on <span class="colophon-date" title="Thursday 25 December 2025 00:52">Thursday 25 December 2025</span>. Using Julia version 1.12.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
