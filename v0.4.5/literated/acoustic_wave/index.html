@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Acoustic wave in shear layer · Breeze</title><meta name="title" content="Acoustic wave in shear layer · Breeze"/><meta property="og:title" content="Acoustic wave in shear layer · Breeze"/><meta property="twitter:title" content="Acoustic wave in shear layer · Breeze"/><meta name="description" content="Documentation for Breeze."/><meta property="og:description" content="Documentation for Breeze."/><meta property="twitter:description" content="Documentation for Breeze."/><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../search_index.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">Breeze</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><span class="tocitem">Examples</span><ul><li><a class="tocitem" href="../dry_thermal_bubble/">Stratified dry thermal bubble</a></li><li><a class="tocitem" href="../cloudy_thermal_bubble/">Cloudy thermal bubble</a></li><li><a class="tocitem" href="../cloudy_kelvin_helmholtz/">Cloudy Kelvin-Helmholtz instability</a></li><li><a class="tocitem" href="../bomex/">Shallow cumulus convection (BOMEX)</a></li><li><a class="tocitem" href="../rico/">Precipitating shallow cumulus (RICO)</a></li><li><a class="tocitem" href="../prescribed_sea_surface_temperature/">Convection over prescribed sea surface temperature (SST)</a></li><li><a class="tocitem" href="../inertia_gravity_wave/">Inertia gravity wave: many time steppers</a></li><li><a class="tocitem" href="../single_column_radiation/">Single column radiation</a></li><li><a class="tocitem" href="../stationary_parcel_model/">Stationary parcel model</a></li><li><a class="tocitem" href="../rising_parcels/">Rising parcel: adiabatic ascent</a></li><li class="is-active"><a class="tocitem" href>Acoustic wave in shear layer</a><ul class="internal"><li><a class="tocitem" href="#Grid-and-model-setup"><span>Grid and model setup</span></a></li><li><a class="tocitem" href="#Background-state"><span>Background state</span></a></li><li><a class="tocitem" href="#Initial-conditions"><span>Initial conditions</span></a></li><li><a class="tocitem" href="#Simulation-setup"><span>Simulation setup</span></a></li><li><a class="tocitem" href="#Output"><span>Output</span></a></li><li><a class="tocitem" href="#Visualization"><span>Visualization</span></a></li></ul></li><li><a class="tocitem" href="../kinematic_driver/">Cloud formation in prescribed updraft</a></li><li><a class="tocitem" href="../two_dimension_mountain_wave/">Schär mountain wave with terrain-following coordinates</a></li><li><a class="tocitem" href="../splitting_supercell/">Splitting supercell</a></li><li><a class="tocitem" href="../tropical_cyclone_world/">Tropical cyclone world</a></li><li><a class="tocitem" href="../radiative_convection/">Diurnal cycle of radiative convection</a></li></ul></li><li><a class="tocitem" href="../../thermodynamics/">Thermodynamics</a></li><li><span class="tocitem">AtmosphereModel</span><ul><li><a class="tocitem" href="../../atmosphere_model/diagnostics/">Diagnostics</a></li></ul></li><li><span class="tocitem">Microphysics</span><ul><li><a class="tocitem" href="../../microphysics/microphysics_overview/">Overview</a></li><li><a class="tocitem" href="../../microphysics/warm_phase_saturation_adjustment/">Warm-phase saturation adjustment</a></li><li><a class="tocitem" href="../../microphysics/mixed_phase_saturation_adjustment/">Mixed-phase saturation adjustment</a></li></ul></li><li><span class="tocitem">Developers</span><ul><li><input class="collapse-toggle" id="menuitem-6-1" type="checkbox"/><label class="tocitem" for="menuitem-6-1"><span class="docs-label">Microphysics</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../../developer/microphysics/overview/">Overview</a></li><li><a class="tocitem" href="../../developer/microphysics/example/">Example implementation</a></li><li><a class="tocitem" href="../../developer/microphysics/future_improvements/">Future improvements</a></li></ul></li></ul></li><li><a class="tocitem" href="../../radiative_transfer/">Radiative Transfer</a></li><li><span class="tocitem">Dynamics</span><ul><li><a class="tocitem" href="../../dycore_equations_algorithms/">Governing equations</a></li><li><a class="tocitem" href="../../anelastic_dynamics/">Anelastic dynamics</a></li><li><a class="tocitem" href="../../compressible_dynamics/">Compressible dynamics</a></li><li><a class="tocitem" href="../../terrain_following_coordinates/">Terrain-following coordinates</a></li></ul></li><li><span class="tocitem">Appendix</span><ul><li><a class="tocitem" href="../../appendix/notation/">Notation</a></li><li><a class="tocitem" href="../../reproducibility/">Reproducibility of Breeze.jl models</a></li></ul></li><li><a class="tocitem" href="../../references/">References</a></li><li><a class="tocitem" href="../../api/">API</a></li><li><a class="tocitem" href="../../contributing/">Contributors guide</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Examples</a></li><li class="is-active"><a href>Acoustic wave in shear layer</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Acoustic wave in shear layer</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/NumericalEarth/Breeze.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/NumericalEarth/Breeze.jl/blob/main/examples/acoustic_wave.jl" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Acoustic-wave-refraction-by-wind-shear"><a class="docs-heading-anchor" href="#Acoustic-wave-refraction-by-wind-shear">Acoustic wave refraction by wind shear</a><a id="Acoustic-wave-refraction-by-wind-shear-1"></a><a class="docs-heading-anchor-permalink" href="#Acoustic-wave-refraction-by-wind-shear" title="Permalink"></a></h1><p>This example simulates an acoustic pulse propagating through a wind shear layer using the fully compressible <a href="https://en.wikipedia.org/wiki/Euler_equations_(fluid_dynamics)">Euler equations</a>. When wind speed increases with height, sound waves are refracted: waves traveling <strong>with</strong> the wind bend <strong>downward</strong> (trapped near the surface), while waves traveling <strong>against</strong> the wind bend <strong>upward</strong>.</p><p>The effective propagation speed for a wave traveling in direction <span>$\hat{\boldsymbol{n}}$</span> is</p><p class="math-container">\[\mathbb{C}^{ac} + \boldsymbol{u} \cdot \hat{\boldsymbol{n}}\]</p><p>where <span>$ℂᵃᶜ$</span> is the acoustic sound speed and <span>$\boldsymbol{u}$</span> is the wind velocity. This causes wavefronts to tilt toward regions of lower effective propagation speed.</p><p>This phenomenon explains why distant sounds are often heard more clearly downwind of a source, as sound energy is &quot;ducted&quot; along the surface. For more on this topic, see</p><div class="citation canonical"><ul><li><div id="ostashev2015acoustics">Ostashev, V. E. and Wilson, D. K. (2015). <a href="https://doi.org/10.1201/b18922"><em>Acoustics in moving inhomogeneous media</em></a> (CRC Press).</div></li><li><div id="pierce2019acoustics">Pierce, A. D. (2019). <a href="https://doi.org/10.1007/978-3-030-11214-1"><em>Acoustics: An introduction to its physical principles and applications</em></a> (Springer Cham).</div></li></ul></div><p>We use stable stratification to suppress <a href="https://en.wikipedia.org/wiki/Kelvin%E2%80%93Helmholtz_instability">Kelvin-Helmholtz instability</a> and a logarithmic wind profile consistent with the atmospheric surface layer.</p><pre><code class="language-julia hljs">using Breeze
+using Oceananigans: Oceananigans
+using Oceananigans.Units
+using Printf
+using CairoMakie</code></pre><h2 id="Grid-and-model-setup"><a class="docs-heading-anchor" href="#Grid-and-model-setup">Grid and model setup</a><a id="Grid-and-model-setup-1"></a><a class="docs-heading-anchor-permalink" href="#Grid-and-model-setup" title="Permalink"></a></h2><pre><code class="language-julia hljs">Nx, Nz = 128, 64
+Lx, Lz = 1000, 200  # meters
+
+grid = RectilinearGrid(size = (Nx, Nz), x = (-Lx/2, Lx/2), z = (0, Lz),
+                       topology = (Periodic, Flat, Bounded))
+
+model = AtmosphereModel(grid; dynamics = CompressibleDynamics(ExplicitTimeStepping()))</code></pre><pre><code class="nohighlight hljs">AtmosphereModel{CPU, RectilinearGrid}(time = 0 seconds, iteration = 0)
+├── grid: 128×1×64 RectilinearGrid{Float64, Periodic, Flat, Bounded} on CPU with 3×0×3 halo
+├── dynamics: CompressibleDynamics{ExplicitTimeStepping}
+├── formulation: LiquidIcePotentialTemperatureFormulation
+├── thermodynamic_constants: ThermodynamicConstants{Float64}
+├── timestepper: SSPRungeKutta3
+├── advection scheme: 
+│   ├── momentum: Centered(order=2)
+│   ├── ρθ: Centered(order=2)
+│   └── ρqᵛ: Centered(order=2)
+├── forcing: @NamedTuple{ρ::Returns{Float64}, ρu::Returns{Float64}, ρv::Returns{Float64}, ρw::Returns{Float64}, ρθ::Returns{Float64}, ρqᵛ::Returns{Float64}, ρe::Returns{Float64}}
+├── tracers: ()
+├── coriolis: Nothing
+└── microphysics: Nothing</code></pre><h2 id="Background-state"><a class="docs-heading-anchor" href="#Background-state">Background state</a><a id="Background-state-1"></a><a class="docs-heading-anchor-permalink" href="#Background-state" title="Permalink"></a></h2><p>We build a hydrostatically balanced reference state using <a href="../../api/#Breeze.Thermodynamics.ReferenceState"><code>ReferenceState</code></a>. This provides the background density and pressure profiles.</p><pre><code class="language-julia hljs">constants = model.thermodynamic_constants
+
+θ₀ = 300      # Reference potential temperature (K)
+p₀ = 101325   # Surface pressure (Pa)
+pˢᵗ = 1e5     # Standard pressure (Pa)
+
+reference = ReferenceState(grid, constants; surface_pressure=p₀, potential_temperature=θ₀, standard_pressure=pˢᵗ)</code></pre><pre><code class="nohighlight hljs">ReferenceState{Float64}(p₀=101325.0, θ₀=300.0, pˢᵗ=100000.0)</code></pre><p>The sound speed at the surface determines the acoustic wave propagation speed.</p><pre><code class="language-julia hljs">Rᵈ = constants.molar_gas_constant / constants.dry_air.molar_mass
+cᵖᵈ = constants.dry_air.heat_capacity
+γ = cᵖᵈ / (cᵖᵈ - Rᵈ)
+ℂᵃᶜ = sqrt(γ * Rᵈ * θ₀)</code></pre><pre><code class="nohighlight hljs">347.15629052210863</code></pre><p>The wind profile follows the classic log-law of the atmospheric surface layer.</p><pre><code class="language-julia hljs">U₀ = 20 # Surface velocity (m/s, u★ / κ)
+ℓ = 1  # Roughness length [m] -- like, shrubs and stuff
+
+Uᵢ(z) = U₀ * log((z + ℓ) / ℓ)</code></pre><pre><code class="nohighlight hljs">Uᵢ (generic function with 1 method)</code></pre><h2 id="Initial-conditions"><a class="docs-heading-anchor" href="#Initial-conditions">Initial conditions</a><a id="Initial-conditions-1"></a><a class="docs-heading-anchor-permalink" href="#Initial-conditions" title="Permalink"></a></h2><p>We initialize a localized Gaussian density pulse representing an acoustic disturbance. For a rightward-propagating acoustic wave, the velocity perturbation is in phase with the density perturbation: <span>$u&#39; = (ℂᵃᶜ / ρ₀) ρ&#39;$</span>.</p><pre><code class="language-julia hljs">δρ = 0.01         # Density perturbation amplitude (kg/m³)
+σ = 20            # Pulse width (m)
+
+gaussian(x, z) = exp(-(x^2 + z^2) / 2σ^2)
+ρ₀ = interior(reference.density, 1, 1, 1)[]
+
+ρᵢ(x, z) = adiabatic_hydrostatic_density(z, p₀, θ₀, pˢᵗ, constants) + δρ * gaussian(x, z)
+uᵢ(x, z) = Uᵢ(z) #+ (ℂᵃᶜ / ρ₀) * δρ * gaussian(x, z)
+
+set!(model, ρ=ρᵢ, θ=θ₀, u=uᵢ)</code></pre><h2 id="Simulation-setup"><a class="docs-heading-anchor" href="#Simulation-setup">Simulation setup</a><a id="Simulation-setup-1"></a><a class="docs-heading-anchor-permalink" href="#Simulation-setup" title="Permalink"></a></h2><p>Acoustic waves travel fast (<span>$ℂᵃᶜ ≈ 347$</span> m/s), so we need a small time step. The <a href="https://en.wikipedia.org/wiki/Courant%E2%80%93Friedrichs%E2%80%93Lewy_condition">Courant–Friedrichs–Lewy (CFL) condition</a> is based on the effective propagation speed <span>$ℂᵃᶜ + \mathrm{max}(U)$</span>.</p><pre><code class="language-julia hljs">Δx, Δz = Lx / Nx, Lz / Nz
+Δt = 0.5 * min(Δx, Δz) / (ℂᵃᶜ + Uᵢ(Lz))
+stop_time = 1  # seconds
+
+simulation = Simulation(model; Δt, stop_time)
+Oceananigans.Diagnostics.erroring_NaNChecker!(simulation)
+
+function progress(sim)
+    u, v, w = sim.model.velocities
+    msg = @sprintf(&quot;Iter: %d, t: %s, max|u|: %.2f m/s, max|w|: %.2f m/s&quot;,
+                   iteration(sim), prettytime(sim),
+                   maximum(abs, u), maximum(abs, w))
+    @info msg
+end
+
+add_callback!(simulation, progress, IterationInterval(100))</code></pre><h2 id="Output"><a class="docs-heading-anchor" href="#Output">Output</a><a id="Output-1"></a><a class="docs-heading-anchor-permalink" href="#Output" title="Permalink"></a></h2><p>We perturbation fields for density and x-velocity for visualization.</p><pre><code class="language-julia hljs">ρ = model.dynamics.density
+u, v, w = model.velocities
+
+ρᵇᵍ = CenterField(grid)
+uᵇᵍ = XFaceField(grid)
+
+set!(ρᵇᵍ, (x, z) -&gt; adiabatic_hydrostatic_density(z, p₀, θ₀, pˢᵗ, constants))
+set!(uᵇᵍ, (x, z) -&gt; Uᵢ(z))
+
+ρ′ = Field(ρ - ρᵇᵍ)
+u′ = Field(u - uᵇᵍ)
+
+U = Average(u, dims = 1)
+R = Average(ρ, dims = 1)
+W² = Average(w^2, dims = 1)
+
+filename = &quot;acoustic_wave.jld2&quot;
+outputs = (; ρ′, u′, w, U, R, W²)
+
+simulation.output_writers[:jld2] = JLD2Writer(model, outputs; filename,
+                                              schedule = TimeInterval(0.01),
+                                              overwrite_existing = true)
+
+run!(simulation)</code></pre><pre><code class="nohighlight hljs">[ Info: Initializing simulation...
+[ Info: Iter: 0, t: 0 seconds, max|u|: 105.91 m/s, max|w|: 0.00 m/s
+[ Info:     ... simulation initialization complete (39.008 seconds)
+[ Info: Executing initial time step...
+[ Info:     ... initial time step complete (2.328 seconds).
+[ Info: Iter: 100, t: 333.448 ms, max|u|: 105.91 m/s, max|w|: 0.49 m/s
+[ Info: Iter: 200, t: 666.895 ms, max|u|: 106.25 m/s, max|w|: 0.49 m/s
+[ Info: Simulation is stopping after running for 44.784 seconds.
+[ Info: Simulation time 1 second equals or exceeds stop time 1 second.
+[ Info: Iter: 300, t: 1 second, max|u|: 106.26 m/s, max|w|: 0.32 m/s
+</code></pre><h2 id="Visualization"><a class="docs-heading-anchor" href="#Visualization">Visualization</a><a id="Visualization-1"></a><a class="docs-heading-anchor-permalink" href="#Visualization" title="Permalink"></a></h2><p>Load the saved perturbation fields and create a snapshot.</p><pre><code class="language-julia hljs">ρ′ts = FieldTimeSeries(filename, &quot;ρ′&quot;)
+u′ts = FieldTimeSeries(filename, &quot;u′&quot;)
+wts = FieldTimeSeries(filename, &quot;w&quot;)
+Uts = FieldTimeSeries(filename, &quot;U&quot;)
+Rts = FieldTimeSeries(filename, &quot;R&quot;)
+W²ts = FieldTimeSeries(filename, &quot;W²&quot;)
+
+times = ρ′ts.times
+Nt = length(times)
+
+fig = Figure(size = (900, 600), fontsize = 12)
+
+axρ = Axis(fig[1, 2]; aspect = 5, ylabel = &quot;z (m)&quot;)
+axw = Axis(fig[2, 2]; aspect = 5, ylabel = &quot;z (m)&quot;)
+axu = Axis(fig[3, 2]; aspect = 5, xlabel = &quot;x (m)&quot;, ylabel = &quot;z (m)&quot;)
+axR = Axis(fig[1, 1]; xlabel = &quot;⟨ρ⟩ (kg/m³)&quot;)
+axW = Axis(fig[2, 1]; xlabel = &quot;⟨w²⟩ (m²/s²)&quot;, limits = (extrema(W²ts), nothing))
+axU = Axis(fig[3, 1]; xlabel = &quot;⟨u⟩ (m/s)&quot;)
+
+hidexdecorations!(axρ)
+hidexdecorations!(axw)
+colsize!(fig.layout, 1, Relative(0.2))
+
+n = Observable(Nt)
+ρ′n = @lift ρ′ts[$n]
+u′n = @lift u′ts[$n]
+wn = @lift wts[$n]
+Un = @lift Uts[$n]
+Rn = @lift Rts[$n]
+W²n = @lift W²ts[$n]
+
+ρlim = δρ / 4
+ulim = 1
+
+hmρ = heatmap!(axρ, ρ′n; colormap = :balance, colorrange = (-ρlim, ρlim))
+hmw = heatmap!(axw, wn; colormap = :balance, colorrange = (-ulim, ulim))
+hmu = heatmap!(axu, u′n; colormap = :balance, colorrange = (-ulim, ulim))
+
+lines!(axR, Rn)
+lines!(axW, W²n)
+lines!(axU, Un)
+
+Colorbar(fig[1, 3], hmρ; label = &quot;ρ′ (kg/m³)&quot;)
+Colorbar(fig[2, 3], hmw; label = &quot;w (m/s)&quot;)
+Colorbar(fig[3, 3], hmu; label = &quot;u′ (m/s)&quot;)
+
+title = @lift &quot;Acoustic wave in log-layer shear — t = $(prettytime(times[$n]))&quot;
+fig[0, :] = Label(fig, title, fontsize = 16, tellwidth = false)
+
+CairoMakie.record(fig, &quot;acoustic_wave.mp4&quot;, 1:Nt, framerate = 18) do nn
+    n[] = nn
+end</code></pre><p><video src="../acoustic_wave.mp4" controls="true" title><a href="../acoustic_wave.mp4"></a></video></p><hr/><h3 id="Julia-version-and-environment-information"><a class="docs-heading-anchor" href="#Julia-version-and-environment-information">Julia version and environment information</a><a id="Julia-version-and-environment-information-1"></a><a class="docs-heading-anchor-permalink" href="#Julia-version-and-environment-information" title="Permalink"></a></h3><p>This example was executed with the following version of Julia:</p><pre><code class="language-julia hljs">using InteractiveUtils: versioninfo
+versioninfo()</code></pre><pre><code class="nohighlight hljs">Julia Version 1.12.5
+Commit 5fe89b8ddc1 (2026-02-09 16:05 UTC)
+Build Info:
+  Official https://julialang.org release
+Platform Info:
+  OS: Linux (x86_64-linux-gnu)
+  CPU: 8 × AMD EPYC 7R13 Processor
+  WORD_SIZE: 64
+  LLVM: libLLVM-18.1.7 (ORCJIT, znver3)
+  GC: Built with stock GC
+Threads: 1 default, 1 interactive, 1 GC (on 8 virtual cores)
+Environment:
+  JULIA_GPG = 3673DF529D9049477F76B37566E3C7DC03D6E495
+  JULIA_LOAD_PATH = :@breeze
+  JULIA_PKG_SERVER_REGISTRY_PREFERENCE = eager
+  JULIA_VERSION = 1.12.5
+  JULIA_DEPOT_PATH = /usr/local/share/julia:
+  JULIA_PATH = /usr/local/julia
+  JULIA_PROJECT = @breeze
+</code></pre><p>These were the top-level packages installed in the environment:</p><pre><code class="language-julia hljs">import Pkg
+Pkg.status()</code></pre><pre><code class="nohighlight hljs">Status `/__w/Breeze.jl/Breeze.jl/docs/Project.toml`
+  [86bc3604] AtmosphericProfilesLibrary v0.1.7
+  [660aa2fb] Breeze v0.4.5 `.`
+  [052768ef] CUDA v5.11.0
+  [13f3f980] CairoMakie v0.15.9
+⌅ [6a9e3e04] CloudMicrophysics v0.32.0
+  [e30172f5] Documenter v1.17.0
+  [daee34ce] DocumenterCitations v1.4.1
+  [98b081ad] Literate v2.21.0
+  [85f8d34a] NCDatasets v0.14.14
+  [9e8cae18] Oceananigans v0.106.4
+  [a01a1ee8] RRTMGP v0.21.7
+  [b77e0a4c] InteractiveUtils v1.11.0
+  [44cfe95a] Pkg v1.12.1
+  [9a3f8284] Random v1.11.0
+Info Packages marked with ⌅ have new versions available but compatibility constraints restrict them from upgrading. To see why use `status --outdated`
+</code></pre><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../rising_parcels/">« Rising parcel: adiabatic ascent</a><a class="docs-footer-nextpage" href="../kinematic_driver/">Cloud formation in prescribed updraft »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.17.0 on <span class="colophon-date" title="Friday 3 April 2026 03:51">Friday 3 April 2026</span>. Using Julia version 1.12.5.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
